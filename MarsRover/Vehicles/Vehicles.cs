@@ -34,4 +34,3 @@
     public abstract void TurnRight(string direction);
 
 }
-

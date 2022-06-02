@@ -8,7 +8,6 @@
         Color = cColor;
         Content = content;
     }
-
     public static void PrintColor(ColorGrid obj)
     {
         var prevColor = Console.BackgroundColor;
