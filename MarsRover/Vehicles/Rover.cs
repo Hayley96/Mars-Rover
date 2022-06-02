@@ -1,8 +1,6 @@
 ﻿public class Rover : Vehicles
 {
-    public Rover(int axisX, int axisY, string direction, string type) : base(axisX, axisY, direction, type)
-    {
-    }
+    public Rover(int axisX, int axisY, string direction, string type) : base(axisX, axisY, direction, type) {}
 
     public override void TurnLeft(string direction)
     {
