@@ -12,4 +12,3 @@
     public abstract void Draw(int x, int y, ColorGrid[,] grid);
 
 }
-

@@ -3,4 +3,3 @@
     int PlateauSizeX { get; set; }
     int PlateauSizeY { get; set; }
 }
-

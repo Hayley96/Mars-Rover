@@ -1,6 +1,6 @@
 ﻿public class Rover : Vehicles
 {
-    public Rover(int axisX, int axisY, string direction, string type) : base(axisX, axisY, direction, type) {}
+    public Rover(int axisX, int axisY, string direction, string model) : base(axisX, axisY, direction, model) {}
 
     public override void TurnLeft(string direction)
     {
@@ -36,5 +36,4 @@
             _ => throw new ArgumentException("Direction parameter out of range")
         };
     }
-
 }

@@ -3,16 +3,16 @@
     public int AxisX { get; set; }
     public int AxisY { get; set; }
     public Directions Direction { get; set; }
-    public string Type { get; private set; }
+    public string Model { get; private set; }
 
     public enum Directions { N, E, S, W, };
 
-    public Vehicles(int asisX, int axisY, string direction, string type)
+    public Vehicles(int asisX, int axisY, string direction, string model)
     {
         AxisX = asisX;
         AxisY = axisY;
         IsValidDirection(direction);
-        Type = type;
+        Model = model;
     }
 
     private void IsValidDirection(string direction)
@@ -32,5 +32,4 @@
     public abstract void TurnLeft(string direction);
 
     public abstract void TurnRight(string direction);
-
 }

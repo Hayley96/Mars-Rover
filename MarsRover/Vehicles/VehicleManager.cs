@@ -1,19 +1,28 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+﻿using System.Reflection;
 
 public class VehicleManager
 {
-    public static Vehicles? Vehicle { get; private set; }
+    public Vehicles? Vehicle { get; private set; }
     public readonly List<Vehicles> Vehicles = new List<Vehicles>();
     private static int VehicleAxisX;
     private static int VehicleAxisY;
     private static string Direction = string.Empty;
     private static string VehicleType = string.Empty;
-    private IEnumerable<Type>? subClasses;
+    private string UserVehicleType = string.Empty;
+    private IEnumerable<Type>? vehicleSubClasses;
 
-    private static string vehicleType = "Rover";
+    public void PrepareVehicleData(int vehicleAxisX, int vehicleAxisY, string vehicleDirection, string vehicletype)
+    {
+        VehicleAxisX = vehicleAxisX;
+        VehicleAxisY = vehicleAxisY;
+        Direction = vehicleDirection;
+        UserVehicleType = vehicletype;
+        SetVehicle(UserVehicleType);
+    }
 
-    private Dictionary<string, Action> VehicleTypeActionKeyValuePair = new Dictionary<string, Action>()
-    { { vehicleType, () => Vehicle = new Rover(VehicleAxisX, VehicleAxisY, Direction, VehicleType)} };
-
+    private void SetVehicle(string vehicleType)
+    {
+        object[] VehicleParamArr = { VehicleAxisX, VehicleAxisY, Direction, UserVehicleType, };
+        Vehicle = (Vehicles)GetUserInputInstances.Get(vehicleType, VehicleParamArr);
+    }
 }
