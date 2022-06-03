@@ -1,6 +1,5 @@
 ﻿public class Rectangle : PlateauShapes
 {
-    public ColorGrid[,]? Grid { get; private set; }
     public Rectangle(int _sizeX, int _sizeY) : base(_sizeX, _sizeY) {}
 
     public override void Draw(int sizeX, int sizeY, ColorGrid[,] Grid)
@@ -16,5 +15,6 @@
             Console.Write("\n");
         }
         Console.Write("\n\n");
+        this.Grid = Grid;
     }
 }

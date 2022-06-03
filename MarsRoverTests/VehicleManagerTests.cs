@@ -20,7 +20,7 @@ namespace MarsRoverTests
         public void VehicleManager_Should_Return_A_Instance_Of_Type_Selected_By_Input()
         {
             SetUpPlateau(1, 1);
-            vehicleManager?.PrepareVehicleData(0, 0, "E", "Rover");
+            vehicleManager?.PrepareVehicle(0, 0, "E", "Rover");
             Assert.That(vehicleManager?.Vehicle?.Model, Is.EqualTo("Rover"));
             Assert.That(vehicleManager?.Vehicle?.AxisX, Is.EqualTo(0));
             Assert.That(vehicleManager?.Vehicle?.AxisY, Is.EqualTo(0));

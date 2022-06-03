@@ -7,7 +7,7 @@ SetUpGrid.SetUp(rectangle.PlateauSizeX, rectangle.PlateauSizeY);
 rectangle.Draw(rectangle.PlateauSizeX, rectangle.PlateauSizeY, SetUpGrid.Grid);
 
 VehicleManager vehicleManager = new();
-vehicleManager.PrepareVehicleData(1, 1, "N", "Rover");
+vehicleManager.PrepareVehicle(1, 1, "N", "Rover");
 Console.WriteLine(vehicleManager?.Vehicle?.Model);
 
 PlateauManager plateauManager = new();
@@ -15,4 +15,7 @@ plateauManager.PreparePlateau(5, 6, "Rectangle");
 
 MissionManager missionManager = new(plateauManager, vehicleManager);
 missionManager.ReceivePlateauTypeMessage("Rectangle");
-missionManager.ReceivePlateauSizeMessage("9 9");
+missionManager.ReceivePlateauSizeMessage("6 6");
+
+missionManager.ReceiveVehicleTypeMessage("Rover");
+missionManager.ReceiveVehicleCoordinatesMessage("1 2 N");

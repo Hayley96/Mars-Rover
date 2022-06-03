@@ -3,14 +3,14 @@
 public class VehicleManager
 {
     public Vehicles? Vehicle { get; private set; }
-    private List<Vehicles> Vehicles = new List<Vehicles>();
+    public List<Vehicles> Vehicles { get; private set; } = new List<Vehicles>();
     public  IEnumerable<Type>? subclasses { get; private set; }
     private static int VehicleAxisX;
     private static int VehicleAxisY;
     private static string Direction = string.Empty;
     private string UserVehicleType = string.Empty;
 
-    public void PrepareVehicleData(int vehicleAxisX, int vehicleAxisY, string vehicleDirection, string vehicletype)
+    public void PrepareVehicle(int vehicleAxisX, int vehicleAxisY, string vehicleDirection, string vehicletype)
     {
         VehicleAxisX = vehicleAxisX;
         VehicleAxisY = vehicleAxisY;

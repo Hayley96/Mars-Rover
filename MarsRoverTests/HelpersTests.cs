@@ -66,7 +66,7 @@ namespace MarsRoverTests
         public void Validation_CheckIfClassExists_Should_Return_True_When_Correct_Input_Passed()
         {
             vehicleManager = new();
-            vehicleManager.PrepareVehicleData(1, 2, "N", "Rover");
+            vehicleManager.PrepareVehicle(1, 2, "N", "Rover");
             IEnumerable<Type>? subclasses = vehicleManager.subclasses;
             Validation.CheckIfClassExists("Rover", subclasses).Should().Be(true);
         }
@@ -75,7 +75,7 @@ namespace MarsRoverTests
         public void Validation_CheckIfClassExists_Should_Return_False_When_Input_References_Class_That_Does_Not_Exist()
         {
             vehicleManager = new();
-            vehicleManager.PrepareVehicleData(1, 2, "N", "Rover");
+            vehicleManager.PrepareVehicle(1, 2, "N", "Rover");
             IEnumerable<Type>? subclasses = vehicleManager.subclasses;
             Validation.CheckIfClassExists("Whooops!", subclasses).Should().Be(false);
         }

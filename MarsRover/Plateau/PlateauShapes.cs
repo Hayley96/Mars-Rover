@@ -3,6 +3,8 @@
     public int PlateauSizeX { get; set; }
     public int PlateauSizeY { get; set; }
 
+    public ColorGrid[,]? Grid { get; set; }
+
     public PlateauShapes(int sizeX, int sizeY)
     {
         PlateauSizeX = sizeX;
