@@ -18,5 +18,12 @@ public static class Validation
             RunInCorrectArgs(message);
         return true;
     }
+
+    public static bool CheckIfClassExists(string message, IEnumerable<Type> subclasses)
+    {
+        foreach (var type in subclasses.Where(t => t.Name.Equals(message)))
+            return true;
+        return false;
+    }
 }
 

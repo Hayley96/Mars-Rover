@@ -8,8 +8,10 @@ namespace MarsRoverTests
 {
     public class HelpersTests
     {
-        private List<string> ListTest;
-        private Regex regex;
+        private List<string>? ListTest;
+        private Regex? regex;
+        private VehicleManager? vehicleManager;
+
         [SetUp]
         public void Setup()
         {
@@ -33,31 +35,49 @@ namespace MarsRoverTests
         }
 
         [Test]
-        public void Validation_Should_Return_True_When_Correct_Input_Format_Passed_Example_1_2()
+        public void Validation_CheckArgs_Should_Return_True_When_Correct_Input_Format_Passed_Example_1_2()
         {
             regex = new Regex(@"^[0-9]*\s[0-9]*$");
             Validation.CheckArgs("1 2", regex).Should().Be(true);
         }
 
         [Test]
-        public void Validation_Should_Return_True_When_Correct_Input_Format_Passed_Example_5_6()
+        public void Validation_CheckArgs_Should_Return_True_When_Correct_Input_Format_Passed_Example_5_6()
         {
             regex = new Regex(@"^[0-9]*\s[0-9]*$");
             Validation.CheckArgs("5 6", regex).Should().Be(true);
         }
 
         [Test]
-        public void Validation_Should_Throw_Exception_When_InCorrect_Input_Format_Passed_Example_099()
+        public void Validation_CheckArgs_Should_Throw_Exception_When_InCorrect_Input_Format_Passed_Example_099()
         {
             regex = new Regex(@"^[0-9]*\s[0-9]*$");
             var exNull = Assert.Throws<ArgumentException>(() => Validation.CheckArgs("099", regex));
         }
 
         [Test]
-        public void Validation_Should_Throw_Exception_When_InCorrect_Input_Format_Passed_Example_Twenty()
+        public void Validation_CheckArgs_Should_Throw_Exception_When_InCorrect_Input_Format_Passed_Example_Twenty()
         {
             regex = new Regex(@"^[0-9]*\s[0-9]*$");
             var exNull = Assert.Throws<ArgumentException>(() => Validation.CheckArgs("Twenty", regex));
+        }
+
+        [Test]
+        public void Validation_CheckIfClassExists_Should_Return_True_When_Correct_Input_Passed()
+        {
+            vehicleManager = new();
+            vehicleManager.PrepareVehicleData(1, 2, "N", "Rover");
+            IEnumerable<Type>? subclasses = vehicleManager.subclasses;
+            Validation.CheckIfClassExists("Rover", subclasses).Should().Be(true);
+        }
+
+        [Test]
+        public void Validation_CheckIfClassExists_Should_Return_False_When_Input_References_Class_That_Does_Not_Exist()
+        {
+            vehicleManager = new();
+            vehicleManager.PrepareVehicleData(1, 2, "N", "Rover");
+            IEnumerable<Type>? subclasses = vehicleManager.subclasses;
+            Validation.CheckIfClassExists("Whooops!", subclasses).Should().Be(false);
         }
     }
 }

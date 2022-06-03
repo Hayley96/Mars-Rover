@@ -10,6 +10,4 @@
         plateauManager = _plateauManager;
         vehicleManager = _vehicleManager;
     }
-
-
 }
