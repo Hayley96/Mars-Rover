@@ -4,7 +4,8 @@
 
     public override void Draw(int sizeX, int sizeY, ColorGrid[,] Grid)
     {
-        Console.Clear();
+        if (!Console.IsOutputRedirected) 
+            Console.Clear();
         for (int i = sizeY - 1; i >= 0; i--)
         {
             Console.Write("\n");

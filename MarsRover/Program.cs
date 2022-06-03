@@ -19,3 +19,4 @@ missionManager.ReceivePlateauSizeMessage("6 6");
 
 missionManager.ReceiveVehicleTypeMessage("Rover");
 missionManager.ReceiveVehicleCoordinatesMessage("1 2 N");
+Console.WriteLine(missionManager?.Vehicle?.Model);

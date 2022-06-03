@@ -11,6 +11,8 @@ namespace MarsRoverTests
         private List<string>? ListTest;
         private Regex? regex;
         private VehicleManager? vehicleManager;
+        private MissionManager? missionManager;
+        private PlateauManager? plateauManager;
 
         [SetUp]
         public void Setup()
@@ -96,6 +98,26 @@ namespace MarsRoverTests
         public void SplitStrings_SplitDataIndex2_Should_Return_Third_Letter_From_String()
         {
             SplitStrings.SplitDataIndex2("5 6 N").Should().Be("N");
+        }
+
+        [Test]
+        public void Validation_IsOutOfPlateauBounds_Should_Return_True_When_Vehicle_Position_Is_Within_The_Bounds_Of_The_Plateau()
+        {
+            plateauManager = new();
+            plateauManager.PreparePlateau(5, 5, "Rectangle");
+            vehicleManager = new();
+            vehicleManager.PrepareVehicle(1, 2, "N", "Rover");
+            Validation.IsOutOfPlateauBounds(vehicleManager.Vehicle, plateauManager.Plateau).Should().BeTrue();
+        }
+
+        [Test]
+        public void Validation_IsOutOfPlateauBounds_Should_Return_False_When_Vehicle_Position_Is_Within_The_Bounds_Of_The_Plateau()
+        {
+            plateauManager = new();
+            plateauManager.PreparePlateau(5, 5, "Rectangle");
+            vehicleManager = new();
+            vehicleManager.PrepareVehicle(5, 6, "N", "Rover");
+            var exNull = Assert.Throws<ArgumentException>(() => Validation.IsOutOfPlateauBounds(vehicleManager.Vehicle, plateauManager.Plateau));
         }
     }
 }
