@@ -3,13 +3,11 @@
 public class VehicleManager
 {
     public Vehicles? Vehicle { get; private set; }
-    public readonly List<Vehicles> Vehicles = new List<Vehicles>();
+    private List<Vehicles> Vehicles = new List<Vehicles>();
     private static int VehicleAxisX;
     private static int VehicleAxisY;
     private static string Direction = string.Empty;
-    private static string VehicleType = string.Empty;
     private string UserVehicleType = string.Empty;
-    private IEnumerable<Type>? vehicleSubClasses;
 
     public void PrepareVehicleData(int vehicleAxisX, int vehicleAxisY, string vehicleDirection, string vehicletype)
     {
@@ -24,5 +22,6 @@ public class VehicleManager
     {
         object[] VehicleParamArr = { VehicleAxisX, VehicleAxisY, Direction, UserVehicleType, };
         Vehicle = (Vehicles)GetUserInputInstances.Get(vehicleType, VehicleParamArr);
+        Vehicles = AddItemToList.Add(Vehicles, Vehicle);
     }
 }

@@ -1,7 +1,7 @@
-﻿public class SetUpGrid
+﻿public static class SetUpGrid
 {
-    public ColorGrid[,]? Grid { get; private set; }
-    public ColorGrid[,] SetUp(int sizeX, int sizeY)
+    public static ColorGrid[,]? Grid { get; private set; }
+    public static ColorGrid[,] SetUp(int sizeX, int sizeY)
     {
         Grid = new ColorGrid[sizeY, sizeX];
         for (int i = 0; i < sizeY; i++)

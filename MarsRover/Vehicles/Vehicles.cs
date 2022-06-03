@@ -4,6 +4,7 @@
     public int AxisY { get; set; }
     public Directions Direction { get; set; }
     public string Model { get; private set; }
+    public ColorGrid? GridIcon { get; set; }
 
     public enum Directions { N, E, S, W, };
 

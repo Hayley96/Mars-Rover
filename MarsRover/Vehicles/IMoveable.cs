@@ -4,4 +4,3 @@
     public void TurnRight(string direction);
     public void MoveForward(string direction);
 }
-
