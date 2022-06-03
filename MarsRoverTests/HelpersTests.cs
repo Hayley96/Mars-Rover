@@ -79,5 +79,23 @@ namespace MarsRoverTests
             IEnumerable<Type>? subclasses = vehicleManager.subclasses;
             Validation.CheckIfClassExists("Whooops!", subclasses).Should().Be(false);
         }
+
+        [Test]
+        public void SplitStrings_SplitIntDataIndex0_Should_Return_First_Integer_From_String()
+        {
+            SplitStrings.SplitIntDataIndex0("5 6").Should().Be(5);
+        }
+
+        [Test]
+        public void SplitStrings_SplitIntDataIndex1_Should_Return_Second_Integer_From_String()
+        {
+            SplitStrings.SplitIntDataIndex1("5 6").Should().Be(6);
+        }
+
+        [Test]
+        public void SplitStrings_SplitDataIndex2_Should_Return_Third_Letter_From_String()
+        {
+            SplitStrings.SplitDataIndex2("5 6 N").Should().Be("N");
+        }
     }
 }

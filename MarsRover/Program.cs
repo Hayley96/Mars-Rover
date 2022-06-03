@@ -12,3 +12,7 @@ Console.WriteLine(vehicleManager?.Vehicle?.Model);
 
 PlateauManager plateauManager = new();
 plateauManager.PreparePlateau(5, 6, "Rectangle");
+
+MissionManager missionManager = new(plateauManager, vehicleManager);
+missionManager.ReceivePlateauTypeMessage("Rectangle");
+missionManager.ReceivePlateauSizeMessage("9 9");

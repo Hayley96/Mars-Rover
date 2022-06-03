@@ -26,4 +26,3 @@ public static class Validation
         return false;
     }
 }
-
