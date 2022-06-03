@@ -3,7 +3,7 @@ using System;
 
 namespace MarsRoverTests
 {
-    public class Tests
+    public class RoverTests
     {
         private Rover? rover;
         [SetUp]
