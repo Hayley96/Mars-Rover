@@ -49,23 +49,17 @@ public class MissionManager
     {
         Plateau?.Draw(PlateauSizeX, PlateauSizeY, Plateau.Grid);
     }
-    private void UpdateVehiclePlateauLocation(int VehicleAxisY, int VehicleAxisX)
+    private void UpdateVehiclePlateauLocation(int VehicleAxisY, int VehicleAxisX, Vehicles vehicle)
     {
-        if (Vehicle.Model.Equals(vehicleType))
-        {
-            for (int i = 0; i < Plateau?.PlateauSizeY; i++)
-                for (int j = 0; j < Plateau?.PlateauSizeX; j++)
-                    if (Plateau?.Grid?[i, j].Color == Vehicle?.GridIcon?.Color)
-                    {
-                        Plateau.Grid[i, j].Color = ConsoleColor.Cyan;
-                        Plateau.Grid[i, j].Content = "   ";
-                    }
-            Plateau.Grid[VehicleAxisX, VehicleAxisY].Color = Vehicle.GridIcon.Color;
-            Plateau.Grid[VehicleAxisX, VehicleAxisY].Content = Vehicle.GridIcon.Content;
-        }
-        if (!Vehicle.Model.Equals(vehicleType))
-            Plateau.Grid[VehicleAxisX, VehicleAxisY].Color = Vehicle.GridIcon.Color;
-        Plateau.Grid[VehicleAxisX, VehicleAxisY].Content = Vehicle.GridIcon.Content;
+        for (int i = 0; i < Plateau?.PlateauSizeY; i++)
+            for (int j = 0; j < Plateau?.PlateauSizeX; j++)
+                if (Plateau?.Grid?[i, j].Color == vehicle?.GridIcon?.Color)
+                {
+                    Plateau.Grid[i, j].Color = ConsoleColor.Cyan;
+                    Plateau.Grid[i, j].Content = "   ";
+                }
+        Plateau.Grid[VehicleAxisX, VehicleAxisY].Color = vehicle.GridIcon.Color;
+        Plateau.Grid[VehicleAxisX, VehicleAxisY].Content = vehicle.GridIcon.Content;
     }
 
     public void ReceiveVehicleTypeMessage(string message)
@@ -83,14 +77,14 @@ public class MissionManager
         vehicleDirection = SplitStrings.SplitDataIndex2(message);
         if (Vehicles.Count.Equals(0))
             GetVehicle();
-            UpdateVehiclePlateauLocation(VehicleAxisX, VehicleAxisY);
+            UpdateVehiclePlateauLocation(VehicleAxisX, VehicleAxisY, Vehicle);
         Vehicles.ToList().ForEach(vehicle =>
         {
             if (vehicle.Model.Equals(vehicleType))
-                UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY);
+                UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY, vehicle);
             if (!vehicle.Model.Equals(vehicleType) && vehicle.Equals(Vehicles.Last()))
                 GetVehicle();
-                UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY);
+                UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY, vehicle);
         });
         ReDrawPlateau();
     }
@@ -102,7 +96,7 @@ public class MissionManager
         foreach (var vehicle in Vehicles.Where(v => v.Model.Equals(vehicleType)))
         {
             moveCommands.RunVehicleMoveCommands(vehicleMoveCommands, vehicle, Plateau);
-            UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY);
+            UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY, vehicle);
         }
         ReDrawPlateau();
         DisplayResults();
