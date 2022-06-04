@@ -8,4 +8,7 @@ missionManager.ReceivePlateauSizeMessage("6 7");
 missionManager.ReceiveVehicleTypeMessage("Rover");
 missionManager.ReceiveVehicleCoordinatesMessage("1 2 N");
 missionManager.ReceiveVehicleMoveCommands("MM");
-Console.WriteLine(missionManager?.Vehicle?.Model);
+
+missionManager.ReceiveVehicleTypeMessage("SuperRover");
+missionManager.ReceiveVehicleCoordinatesMessage("2 4 N");
+missionManager.ReceiveVehicleMoveCommands("LM");

@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 public class MissionManager
 {
     private Regex regex = new(@"^\s$");
-    public PlateauManager plateauManager;
-    public VehicleManager vehicleManager;
-    public MoveCommands moveCommands;
+    private PlateauManager plateauManager;
+    private VehicleManager vehicleManager;
+    private MoveCommands moveCommands;
     public PlateauShapes? Plateau { get; private set; }
     public Vehicles? Vehicle { get; private set; }
     private List<Vehicles> Vehicles = new List<Vehicles>();
@@ -49,6 +49,24 @@ public class MissionManager
     {
         Plateau?.Draw(PlateauSizeX, PlateauSizeY, Plateau.Grid);
     }
+    private void UpdateVehiclePlateauLocation(int VehicleAxisY, int VehicleAxisX)
+    {
+        if (Vehicle.Model.Equals(vehicleType))
+        {
+            for (int i = 0; i < Plateau?.PlateauSizeY; i++)
+                for (int j = 0; j < Plateau?.PlateauSizeX; j++)
+                    if (Plateau?.Grid?[i, j].Color == Vehicle?.GridIcon?.Color)
+                    {
+                        Plateau.Grid[i, j].Color = ConsoleColor.Cyan;
+                        Plateau.Grid[i, j].Content = "   ";
+                    }
+            Plateau.Grid[VehicleAxisX, VehicleAxisY].Color = Vehicle.GridIcon.Color;
+            Plateau.Grid[VehicleAxisX, VehicleAxisY].Content = Vehicle.GridIcon.Content;
+        }
+        if (!Vehicle.Model.Equals(vehicleType))
+            Plateau.Grid[VehicleAxisX, VehicleAxisY].Color = Vehicle.GridIcon.Color;
+        Plateau.Grid[VehicleAxisX, VehicleAxisY].Content = Vehicle.GridIcon.Content;
+    }
 
     public void ReceiveVehicleTypeMessage(string message)
     {
@@ -70,10 +88,11 @@ public class MissionManager
         {
             if (vehicle.Model.Equals(vehicleType))
                 UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY);
-            if (vehicle.Equals(Vehicles.Last()))
+            if (!vehicle.Model.Equals(vehicleType) && vehicle.Equals(Vehicles.Last()))
                 GetVehicle();
                 UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY);
         });
+        ReDrawPlateau();
     }
 
     public void ReceiveVehicleMoveCommands(string message)
@@ -85,7 +104,8 @@ public class MissionManager
             moveCommands.RunVehicleMoveCommands(vehicleMoveCommands, vehicle, Plateau);
             UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY);
         }
-
+        ReDrawPlateau();
+        DisplayResults();
     }
 
     private void GetVehicle()
@@ -95,23 +115,11 @@ public class MissionManager
         Vehicles = vehicleManager.Vehicles;
     }
 
-    private void UpdateVehiclePlateauLocation(int VehicleAxisY, int VehicleAxisX)
+    private void DisplayResults()
     {
-        if (Vehicle.Model.Equals(vehicleType))
+        Vehicles.ForEach(vehicle =>
         {
-            for (int i = 0; i < Plateau?.PlateauSizeY; i++)
-                for (int j = 0; j < Plateau?.PlateauSizeX; j++)
-                    if (Plateau?.Grid?[i, j].Color == Vehicle?.GridIcon?.Color)
-                    {
-                        Plateau.Grid[i, j].Color = ConsoleColor.Cyan;
-                        Plateau.Grid[i, j].Content = "   ";
-                    }
-            Plateau.Grid[VehicleAxisX, VehicleAxisY].Color = Vehicle.GridIcon.Color;
-            Plateau.Grid[VehicleAxisX, VehicleAxisY].Content = Vehicle.GridIcon.Content;
-        }
-        if (!Vehicle.Model.Equals(vehicleType))
-            Plateau.Grid[VehicleAxisX, VehicleAxisY].Color = Vehicle.GridIcon.Color;
-            Plateau.Grid[VehicleAxisX, VehicleAxisY].Content = Vehicle.GridIcon.Content;
-        ReDrawPlateau();
+            DisplayResult.DisplayResultString(vehicle);
+        });
     }
 }
