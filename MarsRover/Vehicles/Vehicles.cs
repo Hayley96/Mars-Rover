@@ -6,12 +6,15 @@
     public string Model { get; private set; }
     public ColorGrid? GridIcon { get; set; }
 
-    public Vehicles(int asisX, int axisY, string direction, string model)
+    public int NumberOfStepsCapableOfPerforming { get; private set; }
+
+    public Vehicles(int asisX, int axisY, string direction, string model, int stepsCanTake)
     {
         AxisX = asisX;
         AxisY = axisY;
         Direction = Validation.ValidDirection(direction);
         Model = model;
+        NumberOfStepsCapableOfPerforming = stepsCanTake;
     }
 
     public abstract void MoveForward(string direction);

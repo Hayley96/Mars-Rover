@@ -1,6 +1,6 @@
 ﻿public class Rover : Vehicles
 {
-    public Rover(int axisX, int axisY, string direction, string model) : base(axisX, axisY, direction, model) 
+    public Rover(int axisX, int axisY, string direction, string model) : base(axisX, axisY, direction, model, 1) 
     {
         GridIcon = new ColorGrid(ConsoleColor.Red, " R ");
     }

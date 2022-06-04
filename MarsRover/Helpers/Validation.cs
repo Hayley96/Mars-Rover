@@ -2,11 +2,8 @@
 using System.Text.RegularExpressions;
 public static class Validation
 {
-    private static int platsizeX = MissionManager.PlateauSizeX - 1;
-    private static int platsizeY = MissionManager.PlateauSizeY - 1;
     public enum Directions { N, E, S, W, };
     public enum Movements { L, R, M, };
-
     public static void RunInCorrectArgs(string value, [CallerArgumentExpression("value")] string expression = "",
         string conditionExpression = "")
     {
@@ -30,12 +27,31 @@ public static class Validation
 
     public static bool IsOutOfPlateauBounds(Vehicles vehicle, PlateauShapes plateau)
     {
-        if (vehicle.AxisX >= 0 && vehicle.AxisX < plateau.PlateauSizeX-1 && vehicle.AxisY >= 0 && vehicle.AxisY < plateau.PlateauSizeY - 1)
+        if (vehicle.AxisX >= 0 && vehicle.AxisX < plateau.PlateauSizeX && vehicle.AxisY >= 0 && vehicle.AxisY < plateau.PlateauSizeY)
         {
             return true;
         }
         Console.WriteLine("ERROR: Entering Plateau Out-Of-Bounds");
         throw new ArgumentException("Entering Plateau Out-Of-Bounds");
+    }
+
+    public static void CollisionCheck(Vehicles vehicle, PlateauShapes plateau)
+    {
+        var command = plateau.Grid[0,0];
+        _ = vehicle.Direction.ToString() switch
+        {
+            "N" => command = plateau.Grid[(vehicle.AxisY + vehicle.NumberOfStepsCapableOfPerforming), vehicle.AxisX],
+            "E" => command = plateau.Grid[vehicle.AxisY, (vehicle.AxisX + vehicle.NumberOfStepsCapableOfPerforming)],
+            "W" => command = plateau.Grid[vehicle.AxisY, (vehicle.AxisX -vehicle.NumberOfStepsCapableOfPerforming)],
+            "S" => command = plateau.Grid[(vehicle.AxisY - vehicle.NumberOfStepsCapableOfPerforming), vehicle.AxisX],
+            _ => throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move")
+        };
+
+        if (command.Color != ConsoleColor.Cyan)
+        {
+            Console.WriteLine($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move");
+            throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move");
+        }
     }
 
     public static bool ValidMoveCommand(string message)

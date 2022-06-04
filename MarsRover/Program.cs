@@ -3,12 +3,12 @@ VehicleManager vehicleManager = new();
 MoveCommands moveCommands = new();
 MissionManager missionManager = new(plateauManager, vehicleManager, moveCommands);
 missionManager.ReceivePlateauTypeMessage("Rectangle");
-missionManager.ReceivePlateauSizeMessage("6 7");
+missionManager.ReceivePlateauSizeMessage("10 5");
 
 missionManager.ReceiveVehicleTypeMessage("Rover");
-missionManager.ReceiveVehicleCoordinatesMessage("1 2 N");
+missionManager.ReceiveVehicleCoordinatesMessage("1 2 E");
 missionManager.ReceiveVehicleMoveCommands("MM");
 
 missionManager.ReceiveVehicleTypeMessage("SuperRover");
-missionManager.ReceiveVehicleCoordinatesMessage("2 4 N");
-missionManager.ReceiveVehicleMoveCommands("LM");
+missionManager.ReceiveVehicleCoordinatesMessage("3 0 N");
+missionManager.ReceiveVehicleMoveCommands("M");

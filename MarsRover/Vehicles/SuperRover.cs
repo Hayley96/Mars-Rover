@@ -1,8 +1,8 @@
 ﻿public class SuperRover : Vehicles
 {
-    public SuperRover(int axisX, int axisY, string direction, string model) : base(axisX, axisY, direction, model) 
+    public SuperRover(int axisX, int axisY, string direction, string model) : base(axisX, axisY, direction, model, 2) 
     {
-        GridIcon = new ColorGrid(ConsoleColor.Green, "SR ");
+        GridIcon = new ColorGrid(ConsoleColor.Green, " S ");
     }
 
     public override void TurnLeft(string direction)

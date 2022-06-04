@@ -11,6 +11,7 @@
             if (command.ToString().Equals("M"))
             {
                 _ = Validation.IsOutOfPlateauBounds(vehicle, plateau);
+                Validation.CollisionCheck(vehicle, plateau);
                 vehicle?.MoveForward(vehicle.Direction.ToString());
             }
         }
