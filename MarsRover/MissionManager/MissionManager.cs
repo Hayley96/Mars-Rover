@@ -6,18 +6,22 @@ public class MissionManager
     private Regex regex = new(@"^\s$");
     public PlateauManager plateauManager;
     public VehicleManager vehicleManager;
+    public MoveCommands moveCommands;
     public PlateauShapes? Plateau { get; private set; }
     public Vehicles? Vehicle { get; private set; }
     private List<Vehicles> Vehicles = new List<Vehicles>();
     public static int PlateauSizeX { get; private set; } = 0;
     public static int PlateauSizeY { get; private set; } = 0;
-    private string vehicleType = string.Empty, vehicleDirection = string.Empty, plateauShape = string.Empty;
+    private string vehicleType = string.Empty, vehicleDirection = string.Empty, vehicleMoveCommands = string.Empty, plateauShape = string.Empty;
     private int VehicleAxisX = 0, VehicleAxisY = 0;
 
-    public MissionManager(PlateauManager _plateauManager, VehicleManager _vehicleManager)
+    public MissionManager(PlateauManager _plateauManager, VehicleManager _vehicleManager, MoveCommands _moveCommands)
     {
         plateauManager = _plateauManager;
         vehicleManager = _vehicleManager;
+        moveCommands = _moveCommands;
+        plateauManager.GetSubclasses();
+        vehicleManager.GetSubclasses();
     }
 
     public void ReceivePlateauTypeMessage(string message)
@@ -43,7 +47,7 @@ public class MissionManager
 
     private void ReDrawPlateau()
     {
-        Plateau?.Draw(PlateauSizeX, PlateauSizeY, plateauManager.Grid);
+        Plateau?.Draw(PlateauSizeX, PlateauSizeY, Plateau.Grid);
     }
 
     public void ReceiveVehicleTypeMessage(string message)
@@ -59,17 +63,29 @@ public class MissionManager
         VehicleAxisX = SplitStrings.SplitIntDataIndex0(message);
         VehicleAxisY = SplitStrings.SplitIntDataIndex1(message);
         vehicleDirection = SplitStrings.SplitDataIndex2(message);
-        Vehicles.ForEach(vehicle =>
-        {
-            if (vehicle.Model.Equals(vehicleType))
-                UpdateVehiclePlateauLocation(VehicleAxisY, VehicleAxisX);
-            if (vehicle.Equals(Vehicles.Last()))
-                GetVehicle();
-                UpdateVehiclePlateauLocation(VehicleAxisX, VehicleAxisY);
-        });
-        if(Vehicles.Count.Equals(0))
+        if (Vehicles.Count.Equals(0))
             GetVehicle();
             UpdateVehiclePlateauLocation(VehicleAxisX, VehicleAxisY);
+        Vehicles.ToList().ForEach(vehicle =>
+        {
+            if (vehicle.Model.Equals(vehicleType))
+                UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY);
+            if (vehicle.Equals(Vehicles.Last()))
+                GetVehicle();
+                UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY);
+        });
+    }
+
+    public void ReceiveVehicleMoveCommands(string message)
+    {
+        Validation.ValidMoveCommand(message);
+        vehicleMoveCommands = message;
+        foreach (var vehicle in Vehicles.Where(v => v.Model.Equals(vehicleType)))
+        {
+            moveCommands.RunVehicleMoveCommands(vehicleMoveCommands, vehicle, Plateau);
+            UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY);
+        }
+
     }
 
     private void GetVehicle()

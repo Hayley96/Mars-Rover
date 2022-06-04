@@ -18,11 +18,15 @@
         Plateau?.Draw(SizeX, SizeY, Grid);
     }
 
+    public void GetSubclasses()
+    {
+        subclasses = GetUserInputInstances.GetSubclasses(typeof(PlateauShapes));
+    }
+
     private void SetPlateau(string plateauShape)
     {
         object[] PlateauParamArr = { SizeX, SizeY, };
         Plateau = (PlateauShapes)GetUserInputInstances.Get(plateauShape, typeof(PlateauShapes), PlateauParamArr);
         Plateaus = AddItemToList.Add(Plateaus, Plateau);
-        subclasses = GetUserInputInstances.subclasses;
     }
 }

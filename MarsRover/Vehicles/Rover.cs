@@ -9,10 +9,10 @@
     {
         _ = direction switch
         {
-            "N" => Direction = Directions.W,
-            "E" => Direction = Directions.N,
-            "W" => Direction = Directions.S,
-            "S" => Direction = Directions.E,
+            "N" => Direction = Validation.Directions.W,
+            "E" => Direction = Validation.Directions.N,
+            "W" => Direction = Validation.Directions.S,
+            "S" => Direction = Validation.Directions.E,
             _ => throw new ArgumentException("Direction parameter out of range")
         };
     }
@@ -20,10 +20,10 @@
     {
         _ = direction switch
         {
-            "N" => Direction = Directions.E,
-            "E" => Direction = Directions.S,
-            "W" => Direction = Directions.N,
-            "S" => Direction = Directions.W,
+            "N" => Direction = Validation.Directions.E,
+            "E" => Direction = Validation.Directions.S,
+            "W" => Direction = Validation.Directions.N,
+            "S" => Direction = Validation.Directions.W,
             _ => throw new ArgumentException("Direction parameter out of range")
         };
     }

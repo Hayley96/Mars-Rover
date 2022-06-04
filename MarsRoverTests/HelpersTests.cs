@@ -69,6 +69,7 @@ namespace MarsRoverTests
         {
             vehicleManager = new();
             vehicleManager.PrepareVehicle(1, 2, "N", "Rover");
+            vehicleManager.GetSubclasses();
             IEnumerable<Type>? subclasses = vehicleManager.subclasses;
             Validation.CheckIfClassExists("Rover", subclasses).Should().Be(true);
         }
@@ -78,6 +79,7 @@ namespace MarsRoverTests
         {
             vehicleManager = new();
             vehicleManager.PrepareVehicle(1, 2, "N", "Rover");
+            vehicleManager.GetSubclasses();
             IEnumerable<Type>? subclasses = vehicleManager.subclasses;
             Validation.CheckIfClassExists("Whooops!", subclasses).Should().Be(false);
         }
@@ -118,6 +120,33 @@ namespace MarsRoverTests
             vehicleManager = new();
             vehicleManager.PrepareVehicle(5, 6, "N", "Rover");
             var exNull = Assert.Throws<ArgumentException>(() => Validation.IsOutOfPlateauBounds(vehicleManager.Vehicle, plateauManager.Plateau));
+        }
+
+        [Test]
+        public void Validation_IsValidMoveCommand_Should_Return_True_When_Valid_Commands_Passed()
+        {
+            Validation.ValidMoveCommand("M").Should().BeTrue();
+        }
+
+        [Test]
+        public void Validation_IsValidMoveCommand_Should_Throw_Exception_When_InValid_Commands_Passed()
+        {
+            var exNull = Assert.Throws<ArgumentException>(() => Validation.ValidMoveCommand("P"));
+        }
+
+        [Test]
+        public void Validation_ValidDirection_Should_Return_Matching_Enum_Value_When_Valid_Direction_Passed()
+        {
+            Validation.Directions shouldBe = Validation.Directions.S;
+            Validation.Directions results;
+            results = Validation.ValidDirection("S");
+            Assert.AreEqual(shouldBe, results);
+        }
+
+        [Test]
+        public void Validation_ValidDirection_Should_Throw_Exception_When_InValid_Direction_Passed()
+        {
+            var exNull = Assert.Throws<ArgumentException>(() => Validation.ValidDirection("P"));
         }
     }
 }

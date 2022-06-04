@@ -5,15 +5,14 @@
         foreach (char command in movecommands)
         {
             if (command.ToString().Equals("L"))
-                vehicle?.TurnLeft(command.ToString());
+                vehicle?.TurnLeft(vehicle.Direction.ToString());
             if (command.ToString().Equals("R"))
-                vehicle?.TurnRight(command.ToString());
+                vehicle?.TurnRight(vehicle.Direction.ToString());
             if (command.ToString().Equals("M"))
             {
                 _ = Validation.IsOutOfPlateauBounds(vehicle, plateau);
-                vehicle?.MoveForward(command.ToString());
+                vehicle?.MoveForward(vehicle.Direction.ToString());
             }
         }
     }
 }
-

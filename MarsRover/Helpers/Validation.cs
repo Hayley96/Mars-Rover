@@ -4,6 +4,7 @@ public static class Validation
 {
     private static int platsizeX = MissionManager.PlateauSizeX - 1;
     private static int platsizeY = MissionManager.PlateauSizeY - 1;
+    public enum Directions { N, E, S, W, };
     public enum Movements { L, R, M, };
 
     public static void RunInCorrectArgs(string value, [CallerArgumentExpression("value")] string expression = "",
@@ -35,5 +36,18 @@ public static class Validation
         }
         Console.WriteLine("ERROR: Entering Plateau Out-Of-Bounds");
         throw new ArgumentException("Entering Plateau Out-Of-Bounds");
+    }
+
+    public static bool ValidMoveCommand(string message)
+    {
+        foreach(char move in message)
+            return Enum.IsDefined(typeof(Movements), move.ToString()) ? true : throw new ArgumentException("Direction parameter out of range");
+        return true;
+    }
+
+    public static Directions ValidDirection(string message)
+    {
+        Directions result;
+        return Enum.TryParse<Directions>(message, out result) ? result : throw new ArgumentException("Direction parameter out of range");
     }
 }

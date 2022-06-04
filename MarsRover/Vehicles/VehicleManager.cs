@@ -19,11 +19,15 @@ public class VehicleManager
         SetVehicle(UserVehicleType);
     }
 
+    public void GetSubclasses()
+    {
+        subclasses = GetUserInputInstances.GetSubclasses(typeof(Vehicles));
+    }
+
     private void SetVehicle(string vehicleType)
     {
         object[] VehicleParamArr = { VehicleAxisX, VehicleAxisY, Direction, UserVehicleType, };
         Vehicle = (Vehicles)GetUserInputInstances.Get(vehicleType, typeof(Vehicles), VehicleParamArr);
         Vehicles = AddItemToList.Add(Vehicles, Vehicle);
-        subclasses = GetUserInputInstances.subclasses;
     }
 }
