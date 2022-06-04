@@ -4,6 +4,7 @@ public static class Validation
 {
     public enum Directions { N, E, S, W, };
     public enum Movements { L, R, M, };
+   
     public static void RunInCorrectArgs(string value, [CallerArgumentExpression("value")] string expression = "",
         string conditionExpression = "")
     {
@@ -37,21 +38,26 @@ public static class Validation
 
     public static void CollisionCheck(Vehicles vehicle, PlateauShapes plateau)
     {
-        var command = plateau.Grid[0,0];
-        _ = vehicle.Direction.ToString() switch
+        var command = plateau?.Grid?[0,0];
+        for(int i =0; i < vehicle.NumberOfStepsCapableOfPerforming; i++)
         {
-            "N" => command = plateau.Grid[(vehicle.AxisY + vehicle.NumberOfStepsCapableOfPerforming), vehicle.AxisX],
-            "E" => command = plateau.Grid[vehicle.AxisY, (vehicle.AxisX + vehicle.NumberOfStepsCapableOfPerforming)],
-            "W" => command = plateau.Grid[vehicle.AxisY, (vehicle.AxisX -vehicle.NumberOfStepsCapableOfPerforming)],
-            "S" => command = plateau.Grid[(vehicle.AxisY - vehicle.NumberOfStepsCapableOfPerforming), vehicle.AxisX],
-            _ => throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move")
-        };
+            _ = vehicle.Direction.ToString() switch
+            {
+                "N" => command = plateau?.Grid?[(vehicle.AxisY + 1), vehicle.AxisX],
+                "E" => command = plateau?.Grid?[vehicle.AxisY, (vehicle.AxisX + 1)],
+                "W" => command = plateau?.Grid?[vehicle.AxisY, (vehicle.AxisX - 1)],
+                "S" => command = plateau?.Grid?[(vehicle.AxisY - 1), vehicle.AxisX],
+                _ => throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move")
 
-        if (command.Color != ConsoleColor.Cyan)
-        {
-            Console.WriteLine($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move");
-            throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move");
+            };
+
+            if (command?.Color != ConsoleColor.Cyan)
+            {
+                Console.WriteLine($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move");
+                throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move");
+            }
         }
+        
     }
 
     public static bool ValidMoveCommand(string message)

@@ -10,5 +10,5 @@ missionManager.ReceiveVehicleCoordinatesMessage("1 2 E");
 missionManager.ReceiveVehicleMoveCommands("MM");
 
 missionManager.ReceiveVehicleTypeMessage("SuperRover");
-missionManager.ReceiveVehicleCoordinatesMessage("3 0 N");
-missionManager.ReceiveVehicleMoveCommands("M");
+missionManager.ReceiveVehicleCoordinatesMessage("4 0 N");
+missionManager.ReceiveVehicleMoveCommands("MMLM");
