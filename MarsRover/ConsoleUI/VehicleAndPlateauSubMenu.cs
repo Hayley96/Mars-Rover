@@ -1,12 +1,12 @@
 ﻿using static System.Console;
-public class MarsRoverMainConsoleUI
+public class VehicleAndPlateauSubMenu
 {
     private MissionManager missionManager;
     private string vehicleType = string.Empty, plateauShape = string.Empty;
     List<string> options = new List<string> { };
 
 
-    public MarsRoverMainConsoleUI(MissionManager _missionManager)
+    public VehicleAndPlateauSubMenu(MissionManager _missionManager)
     {
         missionManager = _missionManager;
     }
@@ -90,4 +90,3 @@ public class MarsRoverMainConsoleUI
         missionManager?.ReceiveVehicleMoveCommands(vehicleMoveCommands);
     }
 }
-

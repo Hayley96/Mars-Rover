@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-public class VehicleManager
+﻿public class VehicleManager
 {
     public Vehicles? Vehicle { get; private set; }
     public List<Vehicles> Vehicles { get; private set; } = new List<Vehicles>();

@@ -1,10 +1,10 @@
 ﻿using static System.Console;
-public class MenuOptionMarsRoverProgram
+public class MainMenu
 {
-    private MarsRoverMainConsoleUI MarsUI;
+    private VehicleAndPlateauSubMenu MarsUI;
     private bool isUserStillSendingInputs = true;
 
-    public MenuOptionMarsRoverProgram(MarsRoverMainConsoleUI _marsUI)
+    public MainMenu(VehicleAndPlateauSubMenu _marsUI)
     {
         MarsUI = _marsUI;
     }
@@ -71,12 +71,11 @@ public class MenuOptionMarsRoverProgram
                 }
             }
         } while (isUserStillSendingInputs);
-        //ExitMarsRoverProgram();
     }
 
     private void DisplayAboutInfo()
     {
-        MenuOptionHistoryOfMarsProgram.DisplayAboutInfo();
+        MenuOptionAboutMarsRoverFacts.DisplayAboutInfo();
         ExitMarsRoverProgram();
     }
 

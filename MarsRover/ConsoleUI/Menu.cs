@@ -45,7 +45,6 @@ public class Menu
         ConsoleKey keyPressed;
         do
         {
-            //Clear();
             DisplayOptions();
 
             ConsoleKeyInfo keyInfo = ReadKey(true);

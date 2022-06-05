@@ -49,8 +49,16 @@ public class MissionManager
         SubclassCount = vehicleManager.subclasses.ToList().Count();
         Validation.CheckIfUserHasInputASubClassThatExists(message, vehicleManager.subclasses);
         vehicleType = message;
-        if(Vehicles.Count != SubclassCount)
-            GetVehicle(vehicleType);
+        if (Vehicles.Count != SubclassCount)
+        {
+            Vehicles.ToList().ForEach(vehicle =>
+            {
+                if(vehicle.Model != vehicleType)
+                    GetVehicle(vehicleType);
+            });
+            if (Vehicles.Count.Equals(0))
+                GetVehicle(vehicleType);
+        }
     }
 
     public void ReceiveVehicleCoordinatesMessage(string message)
