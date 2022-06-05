@@ -23,9 +23,32 @@ The Mars Rover program flow:
 * Apply movement commands to vehicle instance
 * Repeat steps 3-5 until program exited by user
 
+The program accepts the following valid Parameters:
+
+* [L,R,M] - accepts a string of these characters
+* [N,S,E,W] - accepts a character denotiung the direction
+* [1 1 N] - accepts a string denoting the vehicle co-ordinates (X, Y, Direction) in relation to the Plateau surface
+* [5 5] - accepts two integers denoting the Plateau X and Y size
+
+If the user inputs an invalid command, the program will halt and present the user with the option to continue or exit. However, please see section 'Limitations' below for an example 
+where this is not the case.
+
 There is currently only one type of shape available representing the Plateau (Rectangle).
 There are currently two versions of Rovers (Rover, SuperRover). The SuperRover is capable of moving two steps per move forward, the Rover is capable of one step per move forward.
 The program currently operates with Collision detection and Plateau boundary checks.
+
+### Limitations
+
+* Can currently only have one vehicle per each type on the Plateau at any one time - i.e. one Rover and one SuperRover.
+* If the user inputs an incorrect size Plateau, the program will have to terminate instead of allowing the user to continue.
+
+
+### Considerations/Future Work
+
+* Deploy obstacles onto the Plateau at random X and Y co-ordinates.
+* Expand the movements options - i.e. Move backwards, fly etc.
+* Introduce more vehicle objects with different move behaviours.
+* Introduce different Plateau shapes - i.e. circle, hexagon.
 
 ## License
 
