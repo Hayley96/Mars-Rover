@@ -1,19 +1,16 @@
-﻿using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 public class MissionManager
 {
-    private Regex regex = new(@"^\s$");
-    private PlateauManager plateauManager;
-    private VehicleManager vehicleManager;
-    private MoveCommands moveCommands;
+    public  PlateauManager plateauManager { get; private set; }
+    public VehicleManager vehicleManager { get; private set; } 
     public PlateauShapes? Plateau { get; private set; }
     public Vehicles? Vehicle { get; private set; }
-    private List<Vehicles> Vehicles = new List<Vehicles>();
-    public static int PlateauSizeX { get; private set; } = 0;
-    public static int PlateauSizeY { get; private set; } = 0;
+    private Regex? regex;
+    private MoveCommands moveCommands;
+    private int PlateauSizeX = 0, PlateauSizeY = 0, VehicleAxisX = 0, VehicleAxisY = 0, SubclassCount = 0;
     private string vehicleType = string.Empty, vehicleDirection = string.Empty, vehicleMoveCommands = string.Empty, plateauShape = string.Empty;
-    private int VehicleAxisX = 0, VehicleAxisY = 0;
+    private List<Vehicles> Vehicles = new List<Vehicles>();
 
     public MissionManager(PlateauManager _plateauManager, VehicleManager _vehicleManager, MoveCommands _moveCommands)
     {
@@ -26,7 +23,7 @@ public class MissionManager
 
     public void ReceivePlateauTypeMessage(string message)
     {
-        Validation.CheckIfClassExists(message, plateauManager.subclasses);
+        Validation.CheckIfUserHasInputASubClassThatExists(message, plateauManager.subclasses);
         plateauShape = message;
     }
 
@@ -45,27 +42,15 @@ public class MissionManager
         Plateau = plateauManager.Plateau;
     }
 
-    private void ReDrawPlateau()
-    {
+    public void ReDrawPlateau() =>
         Plateau?.Draw(PlateauSizeX, PlateauSizeY, Plateau.Grid);
-    }
-    private void UpdateVehiclePlateauLocation(int VehicleAxisY, int VehicleAxisX, Vehicles vehicle)
-    {
-        for (int i = 0; i < Plateau?.PlateauSizeY; i++)
-            for (int j = 0; j < Plateau?.PlateauSizeX; j++)
-                if (Plateau?.Grid?[i, j].Color == vehicle?.GridIcon?.Color)
-                {
-                    Plateau.Grid[i, j].Color = ConsoleColor.Cyan;
-                    Plateau.Grid[i, j].Content = "   ";
-                }
-        Plateau.Grid[VehicleAxisX, VehicleAxisY].Color = vehicle.GridIcon.Color;
-        Plateau.Grid[VehicleAxisX, VehicleAxisY].Content = vehicle.GridIcon.Content;
-    }
-
     public void ReceiveVehicleTypeMessage(string message)
     {
-        Validation.CheckIfClassExists(message, vehicleManager.subclasses);
+        SubclassCount = vehicleManager.subclasses.ToList().Count();
+        Validation.CheckIfUserHasInputASubClassThatExists(message, vehicleManager.subclasses);
         vehicleType = message;
+        if(Vehicles.Count != SubclassCount)
+            GetVehicle(vehicleType);
     }
 
     public void ReceiveVehicleCoordinatesMessage(string message)
@@ -75,16 +60,19 @@ public class MissionManager
         VehicleAxisX = SplitStrings.SplitIntDataIndex0(message);
         VehicleAxisY = SplitStrings.SplitIntDataIndex1(message);
         vehicleDirection = SplitStrings.SplitDataIndex2(message);
-        if (Vehicles.Count.Equals(0))
-            GetVehicle();
-            UpdateVehiclePlateauLocation(VehicleAxisX, VehicleAxisY, Vehicle);
+
         Vehicles.ToList().ForEach(vehicle =>
         {
             if (vehicle.Model.Equals(vehicleType))
-                UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY, vehicle);
-            if (!vehicle.Model.Equals(vehicleType) && vehicle.Equals(Vehicles.Last()))
-                GetVehicle();
-                UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY, vehicle);
+            {
+                if(Validation.DeploymentCollisionCheck(VehicleAxisX, VehicleAxisY, vehicle, Plateau))
+                {
+                    vehicle.AxisX = VehicleAxisX;
+                    vehicle.AxisY = VehicleAxisY;
+                    vehicle.Direction = Validation.ValidDirection(vehicleDirection);
+                    UpdateVehicleOnGrid.Update(vehicle, Plateau);
+                }
+            }
         });
         ReDrawPlateau();
     }
@@ -93,27 +81,27 @@ public class MissionManager
     {
         Validation.ValidMoveCommand(message);
         vehicleMoveCommands = message;
-        foreach (var vehicle in Vehicles.Where(v => v.Model.Equals(vehicleType)))
+
+        Vehicles.ToList().ForEach(vehicle =>
         {
-            moveCommands.RunVehicleMoveCommands(vehicleMoveCommands, vehicle, Plateau);
-            UpdateVehiclePlateauLocation(vehicle.AxisX, vehicle.AxisY, vehicle);
-        }
+            if (vehicle.Model.Equals(vehicleType))
+            {
+                moveCommands.RunVehicleMoveCommands(vehicleMoveCommands, vehicle, Plateau);
+                UpdateVehicleOnGrid.Update(vehicle, Plateau);
+            }
+
+        });
         ReDrawPlateau();
         DisplayResults();
     }
 
-    private void GetVehicle()
+    private void GetVehicle(string vehicletype)
     {
-        vehicleManager.PrepareVehicle(VehicleAxisX, VehicleAxisY, vehicleDirection, vehicleType);
+        vehicleManager.PrepareVehicle(vehicletype);
         Vehicle = vehicleManager.Vehicle;
         Vehicles = vehicleManager.Vehicles;
     }
 
-    private void DisplayResults()
-    {
-        Vehicles.ForEach(vehicle =>
-        {
-            DisplayResult.DisplayResultString(vehicle);
-        });
-    }
+    public void DisplayResults() =>
+        DisplayResult.DisplayResultString(Vehicles);
 }

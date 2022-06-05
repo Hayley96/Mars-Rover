@@ -1,8 +1,8 @@
 ﻿public class Rover : Vehicles
 {
-    public Rover(int axisX, int axisY, string direction, string model) : base(axisX, axisY, direction, model, 1) 
+    public Rover(string model) : base(model, 1) 
     {
-        GridIcon = new ColorGrid(ConsoleColor.Red, " R ");
+        GridIcon = new ColorGrid(ConsoleColor.Red, "   ");
     }
 
     public override void TurnLeft(string direction)

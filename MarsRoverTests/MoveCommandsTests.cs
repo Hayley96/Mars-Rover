@@ -23,7 +23,7 @@ namespace MarsRoverTests
             plateauManager = new();
             plateauManager.PreparePlateau(5, 5, "Rectangle");
             vehicleManager = new();
-            vehicleManager.PrepareVehicle(1, 2, "N", "Rover");
+            vehicleManager.PrepareVehicle("Rover");
             moveCommands = new();
             moveCommands.RunVehicleMoveCommands("MM", vehicleManager.Vehicle, plateauManager.Plateau);
             Assert.IsTrue(vehicleManager.Vehicle.AxisY.Equals(4));

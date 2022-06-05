@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using static System.Console;
 public static class Validation
 {
     public enum Directions { N, E, S, W, };
@@ -8,8 +9,15 @@ public static class Validation
     public static void RunInCorrectArgs(string value, [CallerArgumentExpression("value")] string expression = "",
         string conditionExpression = "")
     {
-        Console.WriteLine($"Incorrect input value: {value} passed in property: {expression}");
-        throw new ArgumentException($"Incorrect input value: {value} passed in property: {expression}");
+        try
+        {
+            throw new ArgumentException($"Incorrect input value: {value} passed in property: {expression}");
+        }
+        catch(ArgumentException ex)
+        {
+            WriteLine(ex.Message);
+        }
+
     }
 
     public static bool CheckArgs(string message, Regex regex)
@@ -19,57 +27,123 @@ public static class Validation
         return true;
     }
 
-    public static bool CheckIfClassExists(string message, IEnumerable<Type> subclasses)
+    public static bool CheckIfUserHasInputASubClassThatExists(string message, IEnumerable<Type> subclasses)
     {
-        foreach (var type in subclasses.Where(t => t.Name.Equals(message)))
-            return true;
-        return false;
+        try
+        {
+            foreach (var type in subclasses.Where(t => t.Name.Equals(message)))
+                return true;
+            throw new ArgumentException($"No object exists of type: {message} exists....Please Restart");
+        }
+        catch(ArgumentException ex)
+        {
+            WriteLine(ex.Message);
+            return false;
+        }
+        
     }
 
     public static bool IsOutOfPlateauBounds(Vehicles vehicle, PlateauShapes plateau)
     {
-        if (vehicle.AxisX >= 0 && vehicle.AxisX < plateau.PlateauSizeX && vehicle.AxisY >= 0 && vehicle.AxisY < plateau.PlateauSizeY)
+        try
         {
-            return true;
+            if (vehicle.AxisX >= 0 && vehicle.AxisX < plateau.PlateauSizeX && vehicle.AxisY >= 0 && vehicle.AxisY < plateau.PlateauSizeY)
+            {
+                return true;
+            }
+            throw new ArgumentException("Entering Plateau Out-Of-Bounds");
         }
-        Console.WriteLine("ERROR: Entering Plateau Out-Of-Bounds");
-        throw new ArgumentException("Entering Plateau Out-Of-Bounds");
+        catch (ArgumentException ex)
+        {
+            WriteLine(ex.Message);
+            return false;
+        }
+        
     }
 
-    public static void CollisionCheck(Vehicles vehicle, PlateauShapes plateau)
+    public static bool IsGridLocationOccupied(int axisx, int asixy, PlateauShapes plateau)
     {
-        var command = plateau?.Grid?[0,0];
-        for(int i =0; i < vehicle.NumberOfStepsCapableOfPerforming; i++)
+        if (plateau?.Grid?[asixy, axisx].Color == ConsoleColor.Cyan)
+            return true;
+        return false;
+    }
+
+
+    public static bool DeploymentCollisionCheck(int axisX, int axisY, Vehicles vehicle, PlateauShapes plateau)
+    {
+        try
         {
-            _ = vehicle.Direction.ToString() switch
-            {
-                "N" => command = plateau?.Grid?[(vehicle.AxisY + 1), vehicle.AxisX],
-                "E" => command = plateau?.Grid?[vehicle.AxisY, (vehicle.AxisX + 1)],
-                "W" => command = plateau?.Grid?[vehicle.AxisY, (vehicle.AxisX - 1)],
-                "S" => command = plateau?.Grid?[(vehicle.AxisY - 1), vehicle.AxisX],
-                _ => throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move")
+            if (plateau?.Grid?[axisY, axisX].Color == ConsoleColor.Cyan)
+                return true;
+            throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} deployment");
+        }
+        catch(ArgumentException ex)
+        {
+            WriteLine(ex.Message);
+            return false;
+        }
 
-            };
+    }
 
-            if (command?.Color != ConsoleColor.Cyan)
+    public static bool MovementCollisionCheck(Vehicles vehicle, PlateauShapes plateau)
+    {
+        var gridCommand = plateau?.Grid?[0,0];
+        try
+        {
+            for (int i = 1; i < vehicle.NumberOfStepsCapableOfPerforming + 1; i++)
             {
-                Console.WriteLine($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move");
-                throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} move");
+                _ = vehicle.Direction.ToString() switch
+                {
+                    "N" => gridCommand = plateau?.Grid?[(vehicle.AxisY + i), vehicle.AxisX],
+                    "E" => gridCommand = plateau?.Grid?[vehicle.AxisY, (vehicle.AxisX + i)],
+                    "W" => gridCommand = plateau?.Grid?[vehicle.AxisY, (vehicle.AxisX - i)],
+                    "S" => gridCommand = plateau?.Grid?[(vehicle.AxisY - i), vehicle.AxisX],
+                    _ => throw new ArgumentException("ERROR: Direction parameter not found")
+                };
+
+                if (gridCommand?.Color != ConsoleColor.Cyan)
+                {
+                    throw new ArgumentException($"ERROR: Something is in the way....Cannot " +
+                        $"proceed with {vehicle.Model} move");
+                }
             }
         }
+        catch(Exception ex)
+        {
+            WriteLine(ex.Message);
+            return false;
+        }
+        return true;
         
     }
 
     public static bool ValidMoveCommand(string message)
     {
-        foreach(char move in message)
-            return Enum.IsDefined(typeof(Movements), move.ToString()) ? true : throw new ArgumentException("Direction parameter out of range");
-        return true;
+        try
+        {
+            foreach (char move in message)
+                return Enum.IsDefined(typeof(Movements), move.ToString()) ? true : throw new ArgumentException("Move parameter out of range");
+        }
+        catch (ArgumentException ex)
+        {
+            WriteLine(ex.Message);
+            return false;
+        }
+        return false;
     }
 
     public static Directions ValidDirection(string message)
     {
         Directions result;
-        return Enum.TryParse<Directions>(message, out result) ? result : throw new ArgumentException("Direction parameter out of range");
+        try
+        {
+            return Enum.TryParse<Directions>(message, out result) ? result : throw new ArgumentException("Direction parameter out of range");
+        }
+        catch(ArgumentException ex)
+        {
+            WriteLine(ex.Message);
+            return Directions.N;
+        }
+
     }
 }

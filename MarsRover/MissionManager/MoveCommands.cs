@@ -1,4 +1,5 @@
-﻿public class MoveCommands
+﻿using static System.Console;
+public class MoveCommands
 {
     public void RunVehicleMoveCommands(string movecommands, Vehicles vehicle, PlateauShapes plateau)
     {
@@ -11,8 +12,8 @@
             if (command.ToString().Equals("M"))
             {
                 _ = Validation.IsOutOfPlateauBounds(vehicle, plateau);
-                Validation.CollisionCheck(vehicle, plateau);
-                vehicle?.MoveForward(vehicle.Direction.ToString());
+                if(Validation.MovementCollisionCheck(vehicle, plateau))
+                    vehicle?.MoveForward(vehicle.Direction.ToString());
             }
         }
     }

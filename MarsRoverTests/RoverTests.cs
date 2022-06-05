@@ -13,7 +13,7 @@ namespace MarsRoverTests
 
         public void SetUpVehicle(int x, int y, string direction, string type)
         {
-            rover = new(x, y, direction, type);
+            rover = new(type);
         }
 
         [Test]
