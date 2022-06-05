@@ -3,7 +3,7 @@
 The project was initially undertaken as part of the Mars Rover Kata Challenge. Having completed the initial challenge, the task was set to extend the program into a
 Object-Orientated Programming design. 
 
-![grab-landing-page](https://github.com/Hayley96/Mars-Rover/blob/main/GIF/MarsRoverAnimationFast.gif)
+![grab-landing-page](https://github.com/Hayley96/Mars-Rover/blob/main/GIF/MarsRoverAnimation.gif)
 
 ## Description
 
