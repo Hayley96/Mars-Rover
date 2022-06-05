@@ -15,7 +15,7 @@ public static class UpdateVehicleOnGrid
             "E" => vehicle.GridIcon.Content = " > ",
             "W" => vehicle.GridIcon.Content = " < ",
             "S" => vehicle.GridIcon.Content = " v ",
-            _ => throw new NotImplementedException(),
+            _ => throw new ArgumentException("Value not found in Directions"),
         };
     }
 
@@ -36,6 +36,7 @@ public static class UpdateVehicleOnGrid
         catch(Exception ex)
         {
             WriteLine(ex.Message);
+            UserContinueOrEndOption.Continue();
         }
 
     }

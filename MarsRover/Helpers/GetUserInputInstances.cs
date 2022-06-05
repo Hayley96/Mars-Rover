@@ -3,7 +3,7 @@ public static class GetUserInputInstances
 {
     public static IEnumerable<Type> subclasses { get; private set; }
     private static Assembly assembly = Assembly.GetExecutingAssembly();
-    private static Type[] types = assembly.GetTypes();
+    private static List<Type> types = assembly.GetTypes().ToList();
     public static object Get(string className, Type parentType, params object[] paramArray)
     {
         Type type = types.First(t => t.Name == className);

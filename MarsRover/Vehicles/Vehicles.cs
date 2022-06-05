@@ -2,7 +2,7 @@
 {
     public int AxisX { get; set; } = 0;
     public int AxisY { get; set; } = 0;
-    public Validation.Directions Direction { get; set; }
+    public ValidationEnums.Directions Direction { get; set; }
     public string Model { get; private set; }
     public ColorGrid? GridIcon { get; set; }
 

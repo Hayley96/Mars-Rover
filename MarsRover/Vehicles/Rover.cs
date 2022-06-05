@@ -9,10 +9,10 @@
     {
         _ = direction switch
         {
-            "N" => Direction = Validation.Directions.W,
-            "E" => Direction = Validation.Directions.N,
-            "W" => Direction = Validation.Directions.S,
-            "S" => Direction = Validation.Directions.E,
+            "N" => Direction = ValidationEnums.Directions.W,
+            "E" => Direction = ValidationEnums.Directions.N,
+            "W" => Direction = ValidationEnums.Directions.S,
+            "S" => Direction = ValidationEnums.Directions.E,
             _ => throw new ArgumentException("Direction parameter out of range")
         };
     }
@@ -20,10 +20,10 @@
     {
         _ = direction switch
         {
-            "N" => Direction = Validation.Directions.E,
-            "E" => Direction = Validation.Directions.S,
-            "W" => Direction = Validation.Directions.N,
-            "S" => Direction = Validation.Directions.W,
+            "N" => Direction = ValidationEnums.Directions.E,
+            "E" => Direction = ValidationEnums.Directions.S,
+            "W" => Direction = ValidationEnums.Directions.N,
+            "S" => Direction = ValidationEnums.Directions.W,
             _ => throw new ArgumentException("Direction parameter out of range")
         };
     }

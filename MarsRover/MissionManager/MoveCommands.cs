@@ -11,9 +11,16 @@ public class MoveCommands
                 vehicle?.TurnRight(vehicle.Direction.ToString());
             if (command.ToString().Equals("M"))
             {
-                _ = Validation.IsOutOfPlateauBounds(vehicle, plateau);
-                if(Validation.MovementCollisionCheck(vehicle, plateau))
-                    vehicle?.MoveForward(vehicle.Direction.ToString());
+                if(ValidationVehicleBoundary.IsOutOfPlateauBounds(vehicle, plateau))
+                {
+                    if (ValidationVehicleCollision.MovementCollisionCheck(vehicle, plateau))
+                    {
+                        vehicle?.MoveForward(vehicle.Direction.ToString());
+                        UpdateVehicleOnGrid.Update(vehicle, plateau);
+                        plateau?.Draw(plateau.PlateauSizeX, plateau.PlateauSizeY, plateau.Grid);
+                    }
+                }
+          
             }
         }
     }
