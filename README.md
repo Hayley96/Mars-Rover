@@ -30,21 +30,18 @@ The program accepts the following valid Parameters:
 * [1 1 N] - accepts a string denoting the vehicle co-ordinates (X, Y, Direction) in relation to the Plateau surface
 * [5 5] - accepts two integers denoting the Plateau X and Y size
 
-If the user inputs an invalid command, the program will halt and present the user with the option to continue or exit. However, please see section 'Limitations' below for an example 
-where this is not the case.
-
 There is currently only one type of shape available representing the Plateau (Rectangle).
 There are currently two versions of Rovers (Rover, SuperRover). The SuperRover is capable of moving two steps per move forward, the Rover is capable of one step per move forward.
 The program currently operates with Collision detection and Plateau boundary checks.
 
 ### Limitations
 
+* The program is currently not forgiving if the user inputs an invalid value type or format. In this scenario, the program will terminate and the user wil have to start again.
 * Can currently only have one vehicle per each type on the Plateau at any one time - i.e. one Rover and one SuperRover.
-* If the user inputs an incorrect size Plateau, the program will have to terminate instead of allowing the user to continue.
-
 
 ### Considerations/Future Work
 
+* Improve the exception handling to allow the user the option to retry the previous step if invalid value passed.
 * Deploy obstacles onto the Plateau at random X and Y co-ordinates.
 * Expand the movements options - i.e. Move backwards, fly etc.
 * Introduce more vehicle objects with different move behaviours.
