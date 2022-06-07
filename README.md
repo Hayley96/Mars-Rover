@@ -34,9 +34,10 @@ There is currently only one type of shape available representing the Plateau (Re
 There are currently two versions of Rovers (Rover, SuperRover). The SuperRover is capable of moving two steps per move forward, the Rover is capable of one step per move forward.
 The program currently operates with Collision detection and Plateau boundary checks.
 
+If an invalid input is entered, the program will repeat the current step until a correct input value is passed.
+
 ### Limitations
 
-* The program is currently not forgiving if the user inputs an invalid value type or format. In this scenario, the program will terminate and the user wil have to start again.
 * Can currently only have one vehicle per each type on the Plateau at any one time - i.e. one Rover and one SuperRover.
 
 ### Considerations/Future Work
