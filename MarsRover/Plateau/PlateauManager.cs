@@ -2,11 +2,11 @@
 {
     public PlateauShapes? Plateau { get; private set; } = default;
     public ColorGrid[,]? Grid { get; private set; }
-    public IEnumerable<Type>? subclasses { get; private set; }
+    public IEnumerable<Type>? Subclasses { get; private set; }
     public static int SizeX { get; private set; }
     public static int SizeY { get; private set; }
     private string platShape = string.Empty;
-    private List<PlateauShapes> Plateaus = new List<PlateauShapes>();
+    private List<PlateauShapes> Plateaus = new();
 
     public void PreparePlateau(int plateauSizeX, int plateauSizeY, string plateauShape)
     {
@@ -20,7 +20,7 @@
 
     public void GetSubclasses()
     {
-        subclasses = GetUserInputInstances.GetSubclasses(typeof(PlateauShapes));
+        Subclasses = GetUserInputInstances.GetSubclasses(typeof(PlateauShapes));
     }
 
     private void SetPlateau(string plateauShape)

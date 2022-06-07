@@ -77,7 +77,7 @@ namespace MarsRoverTests
             vehicleManager = new();
             vehicleManager.PrepareVehicle("Rover");
             vehicleManager.GetSubclasses();
-            IEnumerable<Type>? subclasses = vehicleManager.subclasses;
+            IEnumerable<Type>? subclasses = vehicleManager.Subclasses;
             ValidationInputs.CheckIfUserHasInputASubClassThatExists("Rover", subclasses!).Should().Be(true);
         }
 

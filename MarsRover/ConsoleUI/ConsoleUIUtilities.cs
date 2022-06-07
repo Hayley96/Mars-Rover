@@ -1,4 +1,6 @@
 ﻿using static System.Console;
+
+
 public static class ConsoleUIUtilities
 {
     public static string GetInputFromUser(string prompt)

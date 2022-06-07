@@ -2,7 +2,7 @@
 {
     public Vehicles? Vehicle { get; private set; }
     public List<Vehicles> Vehicles { get; private set; } = new List<Vehicles>();
-    public  IEnumerable<Type>? subclasses { get; private set; }
+    public  IEnumerable<Type>? Subclasses { get; private set; }
     private string UserVehicleType = string.Empty;
 
     public void PrepareVehicle(string vehicletype)
@@ -13,7 +13,7 @@
 
     public void GetSubclasses()
     {
-        subclasses = GetUserInputInstances.GetSubclasses(typeof(Vehicles));
+        Subclasses = GetUserInputInstances.GetSubclasses(typeof(Vehicles));
     }
 
     private void SetVehicle(string vehicleType)

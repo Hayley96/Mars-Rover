@@ -3,8 +3,8 @@
     public static bool ReceiveVehicleTypeMessage(string message, int SubclassCount, VehicleManager vehicleManager, Vehicles vehicle, 
         List<Vehicles> Vehicles, out string vehicletype)
     {
-        SubclassCount = vehicleManager!.subclasses!.ToList().Count();
-        ValidationInputs.CheckIfUserHasInputASubClassThatExists(message, vehicleManager!.subclasses!);
+        SubclassCount = vehicleManager!.Subclasses!.Count();
+        ValidationInputs.CheckIfUserHasInputASubClassThatExists(message, vehicleManager!.Subclasses!);
         vehicletype = message;
         if (Vehicles.Count != SubclassCount)
         {

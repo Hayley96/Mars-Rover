@@ -16,7 +16,7 @@ public class MarsRoverMenu
         WriteLine("\n");
         string prompt = "Select Vehicle";
         options = new List<string> { };
-        foreach (var type in missionManager!.vehicleManager!.subclasses!)
+        foreach (var type in missionManager!.vehicleManager!.Subclasses!)
         {
             AddItemToList.Add(options, type.Name);
         }
@@ -40,7 +40,7 @@ public class MarsRoverMenu
     {
         string prompt = "Select Plateau";
         options = new List<string> { };
-        foreach (var type in missionManager!.plateauManager!.subclasses!)
+        foreach (var type in missionManager!.plateauManager!.Subclasses!)
         {
             AddItemToList.Add(options, type.Name);
         }
