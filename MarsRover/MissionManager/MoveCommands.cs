@@ -31,7 +31,6 @@ public class MoveCommands
                 }
                 else
                     return false;
-
         }
         return true;
     }

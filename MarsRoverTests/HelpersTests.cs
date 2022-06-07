@@ -11,7 +11,7 @@ namespace MarsRoverTests
         private List<string>? ListTest;
         private Regex? regex;
         private VehicleManager? vehicleManager;
-        private MissionManager? missionManager;
+
         private PlateauManager? plateauManager;
 
         [SetUp]
@@ -78,7 +78,7 @@ namespace MarsRoverTests
             vehicleManager.PrepareVehicle("Rover");
             vehicleManager.GetSubclasses();
             IEnumerable<Type>? subclasses = vehicleManager.subclasses;
-            ValidationInputs.CheckIfUserHasInputASubClassThatExists("Rover", subclasses).Should().Be(true);
+            ValidationInputs.CheckIfUserHasInputASubClassThatExists("Rover", subclasses!).Should().Be(true);
         }
 
 
@@ -88,8 +88,8 @@ namespace MarsRoverTests
         //    vehicleManager = new();
         //    vehicleManager.PrepareVehicle("Rover");
         //    vehicleManager.GetSubclasses();
-        //    IEnumerable<Type>? subclasses = vehicleManager.subclasses;
-        //    ValidationInputs.CheckIfUserHasInputASubClassThatExists("Whooops!", subclasses).Should().Be(false);
+        //    IEnumerable<Type>? Subclasses = vehicleManager.Subclasses;
+        //    ValidationInputs.CheckIfUserHasInputASubClassThatExists("Whooops!", Subclasses).Should().Be(false);
         //}
 
         [Test]
@@ -117,7 +117,7 @@ namespace MarsRoverTests
             plateauManager.PreparePlateau(5, 5, "Rectangle");
             vehicleManager = new();
             vehicleManager.PrepareVehicle("Rover");
-            ValidationVehicleBoundary.IsOutOfPlateauBounds(vehicleManager.Vehicle, plateauManager.Plateau).Should().BeTrue();
+            ValidationVehicleBoundary.IsOutOfPlateauBounds(vehicleManager!.Vehicle!, plateauManager!.Plateau!).Should().BeTrue();
         }
 
         //***As the method now contains a try/catch, there is no exception directed back so the once passing test now fails***//

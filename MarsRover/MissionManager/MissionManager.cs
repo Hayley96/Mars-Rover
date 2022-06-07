@@ -4,9 +4,7 @@
     public VehicleManager vehicleManager { get; private set; }
     public PlateauShapes? Plateau { get; private set; }
     public Vehicles? Vehicle { get; private set; }
-    private PlateauShapes? PlateauTemp; 
-    private Vehicles? VehicleTemp;
-    private MoveCommands moveCommands;
+    private PlateauShapes? PlateauTemp; private Vehicles? VehicleTemp; private MoveCommands moveCommands;
     private int PlateauSizeX = 0, PlateauSizeY = 0, SubclassCount = 0;
     private string vehicleType = string.Empty, plateauShape = string.Empty;
     private List<Vehicles> Vehicles = new List<Vehicles>();

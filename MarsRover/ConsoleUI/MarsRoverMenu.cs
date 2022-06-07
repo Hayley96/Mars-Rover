@@ -1,9 +1,9 @@
 ﻿using static System.Console;
 public class MarsRoverMenu
 {
-    private MissionManager missionManager;
+    private readonly MissionManager missionManager;
     private string vehicleType = string.Empty, plateauShape = string.Empty;
-    List<string> options = new List<string> { };
+    List<string> options = new();
     private bool success = false;
 
     public MarsRoverMenu(MissionManager _missionManager)
@@ -18,7 +18,7 @@ public class MarsRoverMenu
         options = new List<string> { };
         foreach (var type in missionManager!.vehicleManager!.subclasses!)
         {
-            options.Add(type.Name);
+            AddItemToList.Add(options, type.Name);
         }
 
         SubMenu subMenu = new(prompt, options, missionManager);
@@ -42,7 +42,7 @@ public class MarsRoverMenu
         options = new List<string> { };
         foreach (var type in missionManager!.plateauManager!.subclasses!)
         {
-            options.Add(type.Name);
+            AddItemToList.Add(options, type.Name);
         }
         SubMenu subMenu = new(prompt, options, missionManager);
         int selectedIndex = subMenu.Run();

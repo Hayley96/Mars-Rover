@@ -36,7 +36,6 @@ public static class UpdateVehicleOnGrid
         catch(Exception ex)
         {
             WriteLine(ex.Message);
-            //UserContinueOrEndOption.Continue();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿public static class SplitStrings
+﻿public struct SplitStrings
 {
     public static int SplitIntDataIndex0(string input) =>
         int.Parse(input.Split(" ")[0]);

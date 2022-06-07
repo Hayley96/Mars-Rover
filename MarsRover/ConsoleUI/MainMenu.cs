@@ -1,7 +1,7 @@
 ﻿using static System.Console;
 public class MainMenu
 {
-    private MarsRoverMenu MarsUI;
+    private readonly MarsRoverMenu MarsUI;
     private bool isUserStillSendingInputs = true;
 
     public MainMenu(MarsRoverMenu _marsUI)
@@ -73,13 +73,13 @@ public class MainMenu
         } while (isUserStillSendingInputs);
     }
 
-    private void DisplayAboutInfo()
+    private static void DisplayAboutInfo()
     {
         MenuOptionAboutMarsRoverFacts.DisplayAboutInfo();
         ExitMarsRoverProgram();
     }
 
-    private void ExitMarsRoverProgram()
+    private static void ExitMarsRoverProgram()
     {
         WriteLine("\nPress any key to exit...");
         ReadKey(true);

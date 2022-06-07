@@ -20,9 +20,9 @@ public static class ValidationVehicleCollision
 
     public static bool MovementCollisionCheck(Vehicles vehicle, PlateauShapes plateau)
     {
-        var gridCommand = plateau?.Grid?[0,0];
         try
         {
+            var gridCommand = plateau?.Grid?[0, 0];
             for (int i = 1; i < vehicle.NumberOfStepsCapableOfPerforming + 1; i++)
             {
                 _ = vehicle.Direction.ToString() switch
@@ -46,7 +46,6 @@ public static class ValidationVehicleCollision
             WriteLine(ex.Message);
             return false;
         }
-        return true;
-        
+        return true;       
     }
 }

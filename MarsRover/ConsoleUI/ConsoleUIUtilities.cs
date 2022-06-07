@@ -4,8 +4,8 @@ public static class ConsoleUIUtilities
     public static string GetInputFromUser(string prompt)
     {
         Write(prompt);
-        string result;
-        return result = ReadLine()??"";
+        string result = ReadLine() ?? "";
+        return result;
     }
 
     public static void ClearCurrentConsoleLine()
@@ -23,9 +23,9 @@ public static class ConsoleUIUtilities
 
     public static string DisplayUserOptions()
     {
-        string userOptions;
-        return userOptions = GetInputFromUser(@"What would you like to do?: CM/M/D/E 
+        string userOptions = GetInputFromUser(@"What would you like to do?: CM/M/D/E 
 [CM: move vehicle - new coordinates and move commands] [M: move vehicle without new coordinates] 
 [D: deploy new vehicle] [E: exit]: ");
+        return userOptions;
     }
 }

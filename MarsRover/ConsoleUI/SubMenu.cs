@@ -2,10 +2,10 @@
 
 public class SubMenu
 {
-    private MissionManager missionmanager;
+    private readonly MissionManager missionmanager;
     private int selectedIndex;
-    private List<string> menuOptions;
-    private string prompt;
+    private readonly List<string> menuOptions;
+    private readonly string prompt;
 
     public SubMenu(string _prompt, List<string> _options, MissionManager _missionManager)
     {

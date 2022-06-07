@@ -10,7 +10,7 @@ namespace MarsRoverTests
     {
         private VehicleManager? vehicleManager;
         private PlateauManager? plateauManager;
-        private MoveCommands moveCommands;
+        private MoveCommands? moveCommands;
 
         [SetUp]
         public void Setup()
@@ -25,8 +25,8 @@ namespace MarsRoverTests
             vehicleManager = new();
             vehicleManager.PrepareVehicle("Rover");
             moveCommands = new();
-            moveCommands.RunVehicleMoveCommands("MM", vehicleManager.Vehicle, plateauManager.Plateau);
-            Assert.IsTrue(vehicleManager.Vehicle.AxisY.Equals(2));
+            moveCommands.RunVehicleMoveCommands("MM", vehicleManager!.Vehicle!, plateauManager!.Plateau!);
+            Assert.IsTrue(vehicleManager!.Vehicle!.AxisY.Equals(2));
         }
     }
 }
