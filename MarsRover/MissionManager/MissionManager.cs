@@ -1,7 +1,7 @@
 ﻿public class MissionManager
 {
-    public  PlateauManager plateauManager { get; private set; }
-    public VehicleManager vehicleManager { get; private set; } 
+    public PlateauManager plateauManager { get; private set; }
+    public VehicleManager vehicleManager { get; private set; }
     public PlateauShapes? Plateau { get; private set; }
     public Vehicles? Vehicle { get; private set; }
     private PlateauShapes? PlateauTemp; 
@@ -22,7 +22,7 @@
 
     public void ReceivePlateauTypeMessage(string message)
     {
-        ValidationInputs.CheckIfUserHasInputASubClassThatExists(message, plateauManager.subclasses);
+        ValidationInputs.CheckIfUserHasInputASubClassThatExists(message, plateauManager!.subclasses!);
         plateauShape = message;
     }
 
@@ -40,13 +40,13 @@
 
     public void ReceiveVehicleTypeMessage(string message)
     {
-        if(MessageVehicleTypeHandler.ReceiveVehicleTypeMessage(message, SubclassCount, vehicleManager, Vehicle, Vehicles, out vehicleType))
+        if(MessageVehicleTypeHandler.ReceiveVehicleTypeMessage(message, SubclassCount, vehicleManager, Vehicle!, Vehicles, out vehicleType))
             MissionManagerGetVehicle.GetVehicle(vehicleType, vehicleManager, out VehicleTemp, out Vehicles);
     }
 
     public bool ReceiveVehicleCoordinatesMessage(string message)
     {
-        if(MessageCoordinatesHandler.ReceiveCoordinates(message, vehicleType, Vehicles, Plateau))
+        if(MessageCoordinatesHandler.ReceiveCoordinates(message, vehicleType, Vehicles, Plateau!))
         {
             ReDrawPlateau();
             return true;
@@ -54,15 +54,19 @@
         return false;
     }
 
-    public void ReceiveVehicleMoveCommands(string message)
+    public bool ReceiveVehicleMoveCommands(string message)
     {
-        MessageVehicleMove.ReceiveCommands(message, vehicleType, Vehicles, Plateau, moveCommands);
-        ReDrawPlateau();
-        DisplayResults();
+        if (MessageVehicleMove.ReceiveCommands(message, vehicleType, Vehicles, Plateau!, moveCommands))
+        {
+            ReDrawPlateau();
+            DisplayResults();
+            return true;
+        }
+        return false;
     }
 
     public void DisplayResults() =>
         DisplayResult.DisplayResultString(Vehicles);
     public void ReDrawPlateau() =>
-    Plateau?.Draw(PlateauSizeX, PlateauSizeY, Plateau.Grid);
+    Plateau?.Draw(PlateauSizeX, PlateauSizeY, Plateau!.Grid!);
 }

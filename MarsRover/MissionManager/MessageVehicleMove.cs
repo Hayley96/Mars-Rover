@@ -1,18 +1,22 @@
 ﻿public static class MessageVehicleMove
 {
-    public static void ReceiveCommands(string message, string vehicleType, List<Vehicles> Vehicles, PlateauShapes Plateau, MoveCommands moveCommands)
+    private static bool check = false;
+    public static bool ReceiveCommands(string message, string vehicleType, List<Vehicles> Vehicles, PlateauShapes Plateau, MoveCommands moveCommands)
     {
-        ValidationEnums.ValidMoveCommand(message);
-        string vehicleMoveCommands = message;
-
-        Vehicles.ForEach(vehicle =>
+        if (ValidationEnums.ValidMoveCommand(message))
         {
-            if (vehicle.Model.Equals(vehicleType))
-            {
-                moveCommands.RunVehicleMoveCommands(vehicleMoveCommands, vehicle, Plateau);
-            }
+            string vehicleMoveCommands = message;
 
-        });
+            Vehicles.ForEach(vehicle =>
+            {
+                if (vehicle.Model.Equals(vehicleType))
+                    if(moveCommands.RunVehicleMoveCommands(vehicleMoveCommands, vehicle, Plateau))
+                        check = true;
+                    else
+                        check = false;
+            });
+            return check;
+        }
+        return check;
     }
 }
-

@@ -18,6 +18,6 @@ public static class MessagePlateauHandler
     public static void GetPlateau(PlateauManager plateauManager, out PlateauShapes Plateau, int PlateauSizeX, int PlateauSizeY, string plateauShape)
     {
         plateauManager.PreparePlateau(PlateauSizeX, PlateauSizeY, plateauShape);
-        Plateau = plateauManager.Plateau;
+        Plateau = plateauManager!.Plateau!;
     }
 }

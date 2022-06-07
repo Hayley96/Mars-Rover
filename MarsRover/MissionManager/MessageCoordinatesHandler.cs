@@ -3,7 +3,8 @@
 public static class MessageCoordinatesHandler
 {
     private static int VehicleAxisX, VehicleAxisY;
-    private static string vehicleDirection;
+    private static string vehicleDirection = string.Empty;
+    private static bool check = false;
     public static bool ReceiveCoordinates(string message, string vehicleType, List<Vehicles> Vehicles,
         PlateauShapes Plateau)
     {
@@ -24,12 +25,16 @@ public static class MessageCoordinatesHandler
                         vehicle.AxisY = VehicleAxisY;
                         vehicle.Direction = ValidationEnums.ValidDirection(vehicleDirection);
                         UpdateVehicleOnGrid.Update(vehicle, Plateau);
+                        check = true;
                     }
+                    else
+                        check = false;
                 }
+
             });
-            return true;
+            return check;
         }
-        return false;
+        return check;
     }
 }
 

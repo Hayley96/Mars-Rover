@@ -16,7 +16,7 @@ public class MarsRoverMenu
         WriteLine("\n");
         string prompt = "Select Vehicle";
         options = new List<string> { };
-        foreach(var type in missionManager.vehicleManager.subclasses)
+        foreach (var type in missionManager!.vehicleManager!.subclasses!)
         {
             options.Add(type.Name);
         }
@@ -40,7 +40,7 @@ public class MarsRoverMenu
     {
         string prompt = "Select Plateau";
         options = new List<string> { };
-        foreach (var type in missionManager.plateauManager.subclasses)
+        foreach (var type in missionManager!.plateauManager!.subclasses!)
         {
             options.Add(type.Name);
         }
@@ -99,7 +99,12 @@ public class MarsRoverMenu
 
     public void VehicleMoveMessage()
     {
-        string vehicleMoveCommands = ConsoleUIUtilities.GetInputFromUser("Enter vehicle movement commands - [Example: RMMLM]: ");
-        missionManager?.ReceiveVehicleMoveCommands(vehicleMoveCommands);
+        success = false;
+        while (!success)
+        {
+            string vehicleMoveCommands = ConsoleUIUtilities.GetInputFromUser("Enter vehicle movement commands - [Example: RMMLM]: ");
+            if (missionManager.ReceiveVehicleMoveCommands(vehicleMoveCommands))
+                success = true;
+        }
     }
 }

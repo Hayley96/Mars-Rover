@@ -4,7 +4,8 @@ public static class ConsoleUIUtilities
     public static string GetInputFromUser(string prompt)
     {
         Write(prompt);
-        return ReadLine();
+        string result;
+        return result = ReadLine()??"";
     }
 
     public static void ClearCurrentConsoleLine()

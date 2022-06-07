@@ -1,6 +1,6 @@
 ﻿public class PlateauManager
 {
-    public PlateauShapes? Plateau { get; private set; }
+    public PlateauShapes? Plateau { get; private set; } = default;
     public ColorGrid[,]? Grid { get; private set; }
     public IEnumerable<Type>? subclasses { get; private set; }
     public static int SizeX { get; private set; }

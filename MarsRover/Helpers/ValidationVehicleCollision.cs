@@ -8,12 +8,11 @@ public static class ValidationVehicleCollision
             if (plateau?.Grid?[axisY, axisX].Color == ConsoleColor.Cyan)
                 return true;
             throw new ArgumentException($"ERROR: Something is in the way....Cannot proceed with {vehicle.Model} deployment\n" +
-                $"to that position. Defaulting to position [0,0] - you can now move from position [0,0]");
+                $"to that position.");
         }
         catch(ArgumentException ex)
         {
             WriteLine(ex.Message);
-            UserContinueOrEndOption.Continue();
             return false;
         }
 
@@ -45,7 +44,6 @@ public static class ValidationVehicleCollision
         catch(Exception ex)
         {
             WriteLine(ex.Message);
-            UserContinueOrEndOption.Continue();
             return false;
         }
         return true;

@@ -11,10 +11,10 @@ public static class UpdateVehicleOnGrid
     {
         _ = vehicle.Direction.ToString() switch
         {
-            "N" => vehicle.GridIcon.Content = " ^ ",
-            "E" => vehicle.GridIcon.Content = " > ",
-            "W" => vehicle.GridIcon.Content = " < ",
-            "S" => vehicle.GridIcon.Content = " v ",
+            "N" => vehicle!.GridIcon!.Content = " ^ ",
+            "E" => vehicle!.GridIcon!.Content = " > ",
+            "W" => vehicle!.GridIcon!.Content = " < ",
+            "S" => vehicle!.GridIcon!.Content = " v ",
             _ => throw new ArgumentException("Value not found in Directions"),
         };
     }
@@ -27,18 +27,16 @@ public static class UpdateVehicleOnGrid
                 for (int j = 0; j < plateau?.PlateauSizeX; j++)
                     if (plateau?.Grid?[i, j].Color == vehicle?.GridIcon?.Color)
                     {
-                        plateau.Grid[i, j].Color = ConsoleColor.Cyan;
+                        plateau!.Grid![i, j].Color = ConsoleColor.Cyan;
                         plateau.Grid[i, j].Content = "   ";
                     }
-            plateau.Grid[vehicle.AxisY, vehicle.AxisX].Color = vehicle.GridIcon.Color;
+            plateau!.Grid![vehicle!.AxisY, vehicle.AxisX].Color = vehicle!.GridIcon!.Color;
             plateau.Grid[vehicle.AxisY, vehicle.AxisX].Content = vehicle.GridIcon.Content;
         }
         catch(Exception ex)
         {
             WriteLine(ex.Message);
-            UserContinueOrEndOption.Continue();
+            //UserContinueOrEndOption.Continue();
         }
-
     }
 }
-

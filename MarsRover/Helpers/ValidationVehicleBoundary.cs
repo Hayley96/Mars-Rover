@@ -27,7 +27,6 @@ public static class ValidationVehicleBoundary
         catch (Exception ex)
         {
             WriteLine(ex.Message);
-            UserContinueOrEndOption.Continue();
             return false;
         }
         return true;

@@ -9,7 +9,7 @@ Having completed the initial challenge, the task was set to extend the program i
 
 ## Description
 
-Upon initial execution, the application will present a menu to the user. You can navigate the menu using the Up Arrow and Down Arrow keys. To enter a menu option 
+The program is a Windows Console application. Upon initial execution, the application will present a menu to the user. You can navigate the menu using the Up Arrow and Down Arrow keys. To enter a menu option 
 press Enter.
 
 Selecting option 1 in the menu will start the Mars Rover program. Selecting option 2 will present the user with a small extract about the history of the NASA Mars Rover.
@@ -39,10 +39,12 @@ If an invalid input is entered, the program will repeat the current step until a
 ### Limitations
 
 * Can currently only have one vehicle per each type on the Plateau at any one time - i.e. one Rover and one SuperRover.
+* Resizing the console window after the application has started will result in unusual formatting.
+* To display the grid after any updates requires the grid to be re-drawn to the console window, there is a performance cost to this which can be observed by the 'flickering' window.
 
 ### Considerations/Future Work
 
-* Improve the exception handling to allow the user the option to retry the previous step if invalid value passed.
+* Investigate a more appropriate solution for redrawing the grid to the screen after any updates.
 * Deploy obstacles onto the Plateau at random X and Y co-ordinates.
 * Expand the movements options - i.e. Move backwards, fly etc.
 * Introduce more vehicle objects with different move behaviours.
