@@ -26,11 +26,16 @@
         plateauShape = message;
     }
 
-    public void ReceivePlateauSizeMessage(string message)
+    public bool ReceivePlateauSizeMessage(string message)
     {
         MessagePlateauHandler.ReceivePlateauSizeMessage(message, out PlateauSizeX, out PlateauSizeY);
-        MessagePlateauHandler.GetPlateau(plateauManager, out PlateauTemp, PlateauSizeX, PlateauSizeY, plateauShape);
-        Plateau = PlateauTemp;
+        if(PlateauSizeX != 0 && PlateauSizeY != 0)
+        {
+            MessagePlateauHandler.GetPlateau(plateauManager, out PlateauTemp, PlateauSizeX, PlateauSizeY, plateauShape);
+            Plateau = PlateauTemp;
+            return true;
+        }
+        return false;
     }
 
     public void ReceiveVehicleTypeMessage(string message)
@@ -39,10 +44,14 @@
             MissionManagerGetVehicle.GetVehicle(vehicleType, vehicleManager, out VehicleTemp, out Vehicles);
     }
 
-    public void ReceiveVehicleCoordinatesMessage(string message)
+    public bool ReceiveVehicleCoordinatesMessage(string message)
     {
-        MessageCoordinatesHandler.ReceiveCoordinates(message, vehicleType, Vehicles, Plateau);
-        ReDrawPlateau();
+        if(MessageCoordinatesHandler.ReceiveCoordinates(message, vehicleType, Vehicles, Plateau))
+        {
+            ReDrawPlateau();
+            return true;
+        }
+        return false;
     }
 
     public void ReceiveVehicleMoveCommands(string message)

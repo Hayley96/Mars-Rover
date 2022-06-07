@@ -1,5 +1,5 @@
 ﻿using static System.Console;
-public static class MarsRoverLogo
+public struct MarsRoverLogo
 {
     public static string DrawTitle()
     {

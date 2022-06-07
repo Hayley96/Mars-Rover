@@ -2,28 +2,34 @@
 
 public static class MessageCoordinatesHandler
 {
-    public static void ReceiveCoordinates(string message, string vehicleType, List<Vehicles> Vehicles,
+    private static int VehicleAxisX, VehicleAxisY;
+    private static string vehicleDirection;
+    public static bool ReceiveCoordinates(string message, string vehicleType, List<Vehicles> Vehicles,
         PlateauShapes Plateau)
     {
         Regex regex = new(@"^[0-9]*\s[0-9]*\s[N,S,E,W]$");
-        ValidationInputs.CheckArgs(message, regex);
-        int VehicleAxisX = SplitStrings.SplitIntDataIndex0(message);
-        int VehicleAxisY = SplitStrings.SplitIntDataIndex1(message);
-        string vehicleDirection = SplitStrings.SplitDataIndex2(message);
-
-        Vehicles.ToList().ForEach(vehicle =>
+        if (ValidationInputs.CheckArgs(message, regex))
         {
-            if (vehicle.Model.Equals(vehicleType))
+            VehicleAxisX = SplitStrings.SplitIntDataIndex0(message);
+            VehicleAxisY = SplitStrings.SplitIntDataIndex1(message);
+            vehicleDirection = SplitStrings.SplitDataIndex2(message);
+
+            Vehicles.ToList().ForEach(vehicle =>
             {
-                if (ValidationVehicleCollision.DeploymentCollisionCheck(VehicleAxisX, VehicleAxisY, vehicle, Plateau))
+                if (vehicle.Model.Equals(vehicleType))
                 {
-                    vehicle.AxisX = VehicleAxisX;
-                    vehicle.AxisY = VehicleAxisY;
-                    vehicle.Direction = ValidationEnums.ValidDirection(vehicleDirection);
-                    UpdateVehicleOnGrid.Update(vehicle, Plateau);
+                    if (ValidationVehicleCollision.DeploymentCollisionCheck(VehicleAxisX, VehicleAxisY, vehicle, Plateau))
+                    {
+                        vehicle.AxisX = VehicleAxisX;
+                        vehicle.AxisY = VehicleAxisY;
+                        vehicle.Direction = ValidationEnums.ValidDirection(vehicleDirection);
+                        UpdateVehicleOnGrid.Update(vehicle, Plateau);
+                    }
                 }
-            }
-        });
+            });
+            return true;
+        }
+        return false;
     }
 }
 

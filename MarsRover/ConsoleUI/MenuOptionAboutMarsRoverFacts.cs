@@ -1,5 +1,5 @@
 ﻿using static System.Console;
-public static class MenuOptionAboutMarsRoverFacts
+public struct MenuOptionAboutMarsRoverFacts
 {
     public static void DisplayAboutInfo()
     {

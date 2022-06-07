@@ -13,7 +13,7 @@ public static class ValidationInputs
         catch(ArgumentException ex)
         {
             WriteLine(ex.Message);
-            UserContinueOrEndOption.End();
+            //UserContinueOrEndOption.End();
             return false;
         }
 

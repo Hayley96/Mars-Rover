@@ -1,10 +1,10 @@
 ﻿using static System.Console;
 public class MainMenu
 {
-    private VehicleAndPlateauSubMenu MarsUI;
+    private MarsRoverMenu MarsUI;
     private bool isUserStillSendingInputs = true;
 
-    public MainMenu(VehicleAndPlateauSubMenu _marsUI)
+    public MainMenu(MarsRoverMenu _marsUI)
     {
         MarsUI = _marsUI;
     }

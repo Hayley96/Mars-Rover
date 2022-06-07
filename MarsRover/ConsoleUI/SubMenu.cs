@@ -1,5 +1,4 @@
 ﻿using static System.Console;
-using System.Runtime.CompilerServices;
 
 public class SubMenu
 {

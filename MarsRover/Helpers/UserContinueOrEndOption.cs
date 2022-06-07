@@ -11,7 +11,7 @@ public static class UserContinueOrEndOption
 
     public static void End()
     {
-        Write("Cannot proceed without correct Plateau size...You will have to begin again...press any to exit: ");
+        Write("Cannot proceed ...You will have to begin again...press any to exit: ");
         var option = ReadKey();       
         if (!string.IsNullOrEmpty(option.ToString()) && !option.Equals(ConsoleKey.Enter))
             Environment.Exit(0);

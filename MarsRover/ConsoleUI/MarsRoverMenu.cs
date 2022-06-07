@@ -1,18 +1,19 @@
 ﻿using static System.Console;
-public class VehicleAndPlateauSubMenu
+public class MarsRoverMenu
 {
     private MissionManager missionManager;
     private string vehicleType = string.Empty, plateauShape = string.Empty;
     List<string> options = new List<string> { };
+    private bool success = false;
 
-
-    public VehicleAndPlateauSubMenu(MissionManager _missionManager)
+    public MarsRoverMenu(MissionManager _missionManager)
     {
         missionManager = _missionManager;
     }
 
     private void RunVehicleSubMenu()
     {
+        WriteLine("\n");
         string prompt = "Select Vehicle";
         options = new List<string> { };
         foreach(var type in missionManager.vehicleManager.subclasses)
@@ -64,8 +65,15 @@ public class VehicleAndPlateauSubMenu
 
     public void PlateauSizeMessage()
     {
-        string plateausize = ConsoleUIUtilities.GetInputFromUser("Enter size of plateau - [Example: 5 5]: ");
-        missionManager?.ReceivePlateauSizeMessage(plateausize);
+        success = false;
+        while (!success)
+        {
+            string plateausize = ConsoleUIUtilities.GetInputFromUser("Enter size of plateau - [Example: 5 5]: ");
+            if (missionManager.ReceivePlateauSizeMessage(plateausize))
+            {
+                success = true;
+            }
+        }
     }
 
     public void VehicleTypeMessage()
@@ -78,8 +86,13 @@ public class VehicleAndPlateauSubMenu
 
     public void VehicleCoordMessage()
     {
-        string vehicleCoordinates = ConsoleUIUtilities.GetInputFromUser("Enter vehicle co-ordinates - [Example: 1 2 N]: ");
-        missionManager?.ReceiveVehicleCoordinatesMessage(vehicleCoordinates);
+        success = false;
+        while (!success)
+        {
+            string vehicleCoordinates = ConsoleUIUtilities.GetInputFromUser("Enter vehicle co-ordinates - [Example: 1 2 N]: ");
+            if (missionManager.ReceiveVehicleCoordinatesMessage(vehicleCoordinates))
+                success = true;
+        }
         ConsoleUIUtilities.ResetCursorPosition();
         ConsoleUIUtilities.ClearCurrentConsoleLine();
     }
